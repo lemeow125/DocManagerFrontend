@@ -60,25 +60,16 @@ export default function AppSidebar() {
       <SidebarContent className="space-y-1">
         {authenticated ? (
           <>
-            <Button onClick={() => navigate("/dashboard")} className="w-full">
+            <Button onClick={() => navigate("/dashboard/")} className="w-full">
               <div className="flex flex-row items-center w-full gap-1">
                 <DashboardIcon />
                 <span>Dashboard</span>
               </div>
             </Button>
-            <Button onClick={() => navigate("/profile")} className="w-full">
+            <Button onClick={() => navigate("/profile/")} className="w-full">
               <div className="flex flex-row items-center w-full gap-1">
                 <PersonIcon />
                 <span>Profile</span>
-              </div>
-            </Button>
-            <Button
-              onClick={() => navigate("/requests/list")}
-              className="w-full"
-            >
-              <div className="flex flex-row items-center w-full gap-1">
-                <BookIcon />
-                <span>Document Requests</span>
               </div>
             </Button>
           </>
@@ -120,10 +111,22 @@ export default function AppSidebar() {
             <p className="text-sm text-center sm:text-left font-bold">
               Client Actions
             </p>
-            <Button onClick={() => navigate("/documents/")} className="w-full">
+            <Button
+              onClick={() => navigate("/requests/list")}
+              className="w-full"
+            >
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
-                <span>View Documents</span>
+                <span>View Document Requests (Client)</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/documents/list/")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>View Documents (Client)</span>
               </div>
             </Button>
             <Button
@@ -150,16 +153,38 @@ export default function AppSidebar() {
             >
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
-                <span>Upload Document</span>
+                <span>Upload Document (Staff/Head)</span>
               </div>
             </Button>
+            {user.data.role == "head" ? (
+              <Button
+                onClick={() => navigate("/requests/list/head/")}
+                className="w-full"
+              >
+                <div className="flex flex-row items-center w-full gap-1">
+                  <BookIcon />
+                  <span>Document Requests (Head)</span>
+                </div>
+              </Button>
+            ) : (
+              <Button
+                onClick={() => navigate("/requests/list/staff/")}
+                className="w-full"
+              >
+                <div className="flex flex-row items-center w-full gap-1">
+                  <BookIcon />
+                  <span>Document Requests (Staff)</span>
+                </div>
+              </Button>
+            )}
+
             <Button
-              onClick={() => navigate("/documents/staff/")}
+              onClick={() => navigate("/documents/list/staff/")}
               className="w-full"
             >
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
-                <span>View Documents (Staff)</span>
+                <span>View Documents (Staff/Head)</span>
               </div>
             </Button>
           </>

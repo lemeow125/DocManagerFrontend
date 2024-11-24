@@ -1,4 +1,4 @@
-import { StaffDocumentsAPI, DocumentType } from "@/components/API";
+import { DocumentsAPI, DocumentType } from "@/components/API";
 import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
@@ -12,14 +12,14 @@ import {
   TableCaption,
   TableFooter,
 } from "@/components/ui/table";
-import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { useState } from "react";
-export default function StaffDocumentsPage() {
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
+export default function ClientDocumentsPage() {
   const [search_term, setSearchTerm] = useState("");
   const documents = useQuery({
-    queryKey: ["staff_documents"],
-    queryFn: StaffDocumentsAPI,
+    queryKey: ["client_documents"],
+    queryFn: DocumentsAPI,
   });
   if (documents.isLoading) {
     return <LoadingPage />;
@@ -37,7 +37,7 @@ export default function StaffDocumentsPage() {
     <div className="flex h-screen w-full items-center justify-center p-4">
       <div className="flex flex-col items-center justify-center text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {"Documents (Staff View)"}
+          {"Documents (Client View)"}
         </h1>
         <div className="self-start flex flex-row items-center text-center content-center">
           <Label htmlFor="name">Search</Label>
@@ -55,7 +55,6 @@ export default function StaffDocumentsPage() {
               <TableHead className="w-[100px]">ID</TableHead>
               <TableHead>File Name</TableHead>
               <TableHead>Type</TableHead>
-              <TableHead>Link</TableHead>
               <TableHead className="text-right">Date Uploaded</TableHead>
             </TableRow>
           </TableHeader>
@@ -87,13 +86,6 @@ export default function StaffDocumentsPage() {
                   <TableCell className="text-left">
                     {document.document_type}
                   </TableCell>
-                  <TableCell className="text-left">
-                    {document.file ? (
-                      <a href={document.file}>Preview</a>
-                    ) : (
-                      <p>Not available</p>
-                    )}
-                  </TableCell>
                   <TableCell className="text-right">
                     {document.date_uploaded}
                   </TableCell>
@@ -102,7 +94,7 @@ export default function StaffDocumentsPage() {
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={4}>Total</TableCell>
+              <TableCell colSpan={3}>Total</TableCell>
               <TableCell className="text-right">
                 {documents.data ? documents.data.length : 0}
               </TableCell>

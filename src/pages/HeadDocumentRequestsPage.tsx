@@ -1,5 +1,5 @@
 import {
-  DocumentRequestsAPI,
+  HeadDocumentRequestsAPI,
   DocumentRequestType,
   DocumentRequestUnitType,
 } from "@/components/API";
@@ -17,13 +17,16 @@ import {
   TableFooter,
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
-export default function DocumentRequestsPage() {
+import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+export default function HeadDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
+  const [view_pending_only, setViewPendingOnly] = useState(false);
   const document_requests = useQuery({
-    queryKey: ["document_requests"],
-    queryFn: DocumentRequestsAPI,
+    queryKey: ["head_document_requests"],
+    queryFn: HeadDocumentRequestsAPI,
   });
   if (document_requests.isLoading) {
     return <LoadingPage />;
@@ -36,11 +39,12 @@ export default function DocumentRequestsPage() {
       />
     );
   }
+
   return (
     <div className="flex h-screen w-full items-center justify-center p-4">
       <div className="flex flex-col items-center justify-center text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {"Document Requests (Client View)"}
+          {"Document Requests (Head View)"}
         </h1>
         <div className="self-start flex flex-row items-center text-center content-center">
           <Label htmlFor="name">Search</Label>
@@ -50,6 +54,13 @@ export default function DocumentRequestsPage() {
             }
             id="search_term"
           />
+        </div>
+        <div className="self-start flex flex-row items-center text-center content-center gap-1">
+          <Checkbox
+            checked={view_pending_only}
+            onClick={() => setViewPendingOnly(!view_pending_only)}
+          />
+          <Label htmlFor="name">Show Pending Only</Label>
         </div>
         <Table className="w-[840px]">
           <TableCaption>Document Requests</TableCaption>
@@ -62,7 +73,8 @@ export default function DocumentRequestsPage() {
               <TableHead>Status</TableHead>
               <TableHead>Documents Requested</TableHead>
               <TableHead>Type</TableHead>
-              <TableHead className="text-right">Date Requested</TableHead>
+              <TableHead>Date Requested</TableHead>
+              <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -89,6 +101,9 @@ export default function DocumentRequestsPage() {
                     .toLowerCase()
                     .includes(search_term.toLowerCase())
               )
+              .filter((document_request: DocumentRequestType) =>
+                view_pending_only ? document_request.status == "pending" : true
+              )
               .map((document_request: DocumentRequestType) => (
                 <TableRow key={document_request.id}>
                   <TableCell className="text-left font-small">
@@ -107,62 +122,60 @@ export default function DocumentRequestsPage() {
                     {document_request.status}
                   </TableCell>
                   <TableCell className="text-left">
-                    {document_request.status == "approved" ? (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead className="text-left">ID</TableHead>
-                            <TableHead className="text-left">
-                              File Name
-                            </TableHead>
-                            <TableHead className="text-left">Type</TableHead>
-                            <TableHead className="text-right">Link</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody className="overflow-y-scroll h-10">
-                          {document_request.documents.map(
-                            (
-                              document_request_unit: DocumentRequestUnitType
-                            ) => (
-                              <TableRow key={document_request.id}>
-                                <TableCell className="text-left font-medium">
-                                  {document_request.id}
-                                </TableCell>
-                                <TableCell className="text-left font-medium">
-                                  {document_request_unit.document.name}
-                                </TableCell>
-                                <TableCell className="text-left font-medium">
-                                  {document_request_unit.document.document_type}
-                                </TableCell>
-                                <TableCell className="text-right font-medium">
-                                  <a href={document_request_unit.document.file}>
-                                    Preview
-                                  </a>
-                                </TableCell>
-                              </TableRow>
-                            )
-                          )}
-                        </TableBody>
-                        <TableFooter>
-                          <TableRow>
-                            <TableCell colSpan={3}>Total</TableCell>
-                            <TableCell className="text-right">
-                              {document_request.documents
-                                ? document_request.documents.length
-                                : 0}
-                            </TableCell>
-                          </TableRow>
-                        </TableFooter>
-                      </Table>
-                    ) : (
-                      "N/A (Request not approved)"
-                    )}
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead className="text-left">ID</TableHead>
+                          <TableHead className="text-left">File Name</TableHead>
+                          <TableHead className="text-left">Type</TableHead>
+                          <TableHead className="text-right">Link</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody className="overflow-y-scroll h-10">
+                        {document_request.documents.map(
+                          (document_request_unit: DocumentRequestUnitType) => (
+                            <TableRow key={document_request.id}>
+                              <TableCell className="text-left font-medium">
+                                {document_request.id}
+                              </TableCell>
+                              <TableCell className="text-left font-medium">
+                                {document_request_unit.document.name}
+                              </TableCell>
+                              <TableCell className="text-left font-medium">
+                                {document_request_unit.document.document_type}
+                              </TableCell>
+                              <TableCell className="text-right font-medium">
+                                <a href={document_request_unit.document.file}>
+                                  Preview
+                                </a>
+                              </TableCell>
+                            </TableRow>
+                          )
+                        )}
+                      </TableBody>
+                      <TableFooter>
+                        <TableRow>
+                          <TableCell colSpan={3}>Total</TableCell>
+                          <TableCell className="text-right">
+                            {document_request.documents
+                              ? document_request.documents.length
+                              : 0}
+                          </TableCell>
+                        </TableRow>
+                      </TableFooter>
+                    </Table>
                   </TableCell>
                   <TableCell className="text-left">
                     {document_request.type}
                   </TableCell>
-                  <TableCell className="text-right">
+                  <TableCell className="text-left">
                     {document_request.date_requested}
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <div className="flex-col gap-10">
+                      <Button className="w-full">Approve</Button>
+                      <Button className="w-full">Deny</Button>
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

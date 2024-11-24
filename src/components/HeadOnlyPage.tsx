@@ -1,5 +1,5 @@
 import { Navigate } from "react-router";
-import { staff_roles, UserAPI } from "./API";
+import { UserAPI } from "./API";
 import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
@@ -9,14 +9,14 @@ type props = {
   children: React.ReactNode;
 };
 
-export default function StaffOnlyPage(props: props) {
+export default function HeadOnlyPage(props: props) {
   const user = useQuery({ queryKey: ["user"], queryFn: UserAPI });
 
   if (user.isLoading) {
     return <LoadingPage />;
   }
 
-  if (user.isFetched && user.data && staff_roles.includes(user.data.role)) {
+  if (user.isFetched && user.data && user.data.role == "head") {
     return props.children;
   } else {
     toast.error("You are not authorized to view this page.");

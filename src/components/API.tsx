@@ -199,7 +199,7 @@ export async function StaffDocumentsAPI() {
     });
 }
 
-export async function DocmentCreateAPI(document: FormData) {
+export async function DocumentCreateAPI(document: FormData) {
   const config = await GetConfig();
   return instance
     .post("api/v1/documents/upload/", document, config)
@@ -244,6 +244,23 @@ export type DocumentRequestType = {
   date_requested: string;
 };
 
+export type DocumentRequestUpdateType = {
+  status: "pending" | "approved" | "denied";
+};
+
+export async function HeadDocumentRequestsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/requests/list/head/", config)
+    .then((response) => {
+      return response.data as DocumentRequestType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
 export async function DocumentRequestsAPI() {
   const config = await GetConfig();
   return instance
@@ -258,11 +275,28 @@ export async function DocumentRequestsAPI() {
 }
 
 export async function DocmentRequestCreateAPI(
-  document: DocumentRequestCreateType
+  document_request: DocumentRequestCreateType
 ) {
   const config = await GetConfig();
   return instance
-    .post("api/v1/requests/create/", document, config)
+    .post("api/v1/requests/create/", document_request, config)
+    .then((response) => {
+      return [true, response.data as DocumentType];
+    })
+    .catch((error) => {
+      console.log("Error creating document");
+      console.log(error.response.data["detail"]);
+      return [false, error.response.data["detail"]];
+    });
+}
+
+export async function DocmentRequestUpdateAPI(
+  document_request: DocumentRequestUpdateType,
+  id: number
+) {
+  const config = await GetConfig();
+  return instance
+    .patch(`api/v1/requests/update/${id}`, document_request, config)
     .then((response) => {
       return [true, response.data as DocumentType];
     })

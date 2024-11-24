@@ -17,6 +17,9 @@ import UploadDocumentPage from "./pages/UploadDocumentPage";
 import StaffOnlyPage from "./components/StaffOnlyPage";
 import StaffDocumentsPage from "./pages/StaffDocumentsPage";
 import DocumentRequestsPage from "./pages/DocumentRequestsPage";
+import ClientDocumentsPage from "./pages/ClientDocumentsPage";
+import HeadOnlyPage from "./components/HeadOnlyPage";
+import HeadDocumentRequestsPage from "./pages/HeadDocumentRequestsPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -30,7 +33,7 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "/dashboard",
+    path: "/dashboard/",
     element: (
       <>
         <Header />
@@ -41,7 +44,7 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "/profile",
+    path: "/profile/",
     element: (
       <>
         <Header />
@@ -63,7 +66,18 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "/documents/staff/",
+    path: "/documents/list/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <ClientDocumentsPage />
+      </>
+    ),
+  },
+  {
+    path: "/documents/list/staff/",
     element: (
       <>
         <Header />
@@ -72,6 +86,19 @@ const router = createHashRouter([
         <StaffOnlyPage>
           <StaffDocumentsPage />
         </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/requests/list/head/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <HeadOnlyPage>
+          <HeadDocumentRequestsPage />
+        </HeadOnlyPage>
       </>
     ),
   },

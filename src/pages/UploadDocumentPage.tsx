@@ -18,7 +18,7 @@ import {
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { useNavigate } from "react-router";
-import { DocmentCreateAPI, DocumentCreateType } from "@/components/API";
+import { DocumentCreateAPI, DocumentCreateType } from "@/components/API";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 export default function UploadDocumentPage() {
@@ -38,7 +38,7 @@ export default function UploadDocumentPage() {
       formData.append("file", document.file!);
       formData.append("document_type", document.document_type);
       formData.append("number_pages", String(document.number_pages));
-      const data = await DocmentCreateAPI(formData);
+      const data = await DocumentCreateAPI(formData);
       if (data[0] != true) {
         return Promise.reject(new Error(JSON.stringify(data[1])));
       }
@@ -62,7 +62,7 @@ export default function UploadDocumentPage() {
           theme: "light",
         }
       );
-      navigate("/dashboard");
+      navigate("/dashboard/");
     },
     onError: (error) => {
       setError(String(error));

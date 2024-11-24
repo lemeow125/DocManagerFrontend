@@ -29,7 +29,7 @@ export default function LoginPage() {
   const authenticated = useSelector((state: RootState) => state.auth.value);
   useEffect(() => {
     if (authenticated) {
-      navigate("/dashboard");
+      navigate("/dashboard/");
       console.log("Already logged in. Redirecting to dashboard page");
     }
   }, [authenticated, navigate]);
@@ -71,7 +71,7 @@ export default function LoginPage() {
               const status = await LoginAPI(user, user.remember);
               if (status === true) {
                 await dispatch(auth_toggle());
-                navigate("/dashboard");
+                navigate("/dashboard/");
                 toast("Logged in", {
                   position: "top-right",
                   autoClose: 2000,
