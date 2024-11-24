@@ -12,6 +12,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import DashboardPage from "./pages/DashboardPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ProfilePage from "./pages/ProfilePage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -31,6 +32,17 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <DashboardPage />
+      </>
+    ),
+  },
+  {
+    path: "/profile",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <ProfilePage />
       </>
     ),
   },

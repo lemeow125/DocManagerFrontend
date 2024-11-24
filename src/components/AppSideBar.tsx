@@ -38,16 +38,19 @@ export default function AppSidebar() {
           <AppIcon size={64} />
           <div className="flex flex-col gap-2 items-start">
             <p className="text-sm text-center sm:text-left font-bold">DDMS</p>
-            <p className="text-sm text-center sm:text-left">
-              Logged in as {user.data?.full_name}
-            </p>
+            <div className="flex flex-row gap-2 items-start justify-center">
+              <PersonIcon size={24} />
+              <p className="text-sm text-center sm:text-left">
+                {user.data?.full_name}
+              </p>
+            </div>
           </div>
         </div>
         <Button onClick={() => toggleSidebar()}>
           <DashboardIcon />
         </Button>
         <Separator />
-        <div className="flex flex-row gap-2 items-center gap-1">
+        <div className="flex flex-row items-center gap-1">
           <BookIcon />
           <p className="text-sm text-center sm:text-left font-bold">
             Role: {user.data?.role}
