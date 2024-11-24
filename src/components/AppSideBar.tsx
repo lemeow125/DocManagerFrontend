@@ -73,7 +73,7 @@ export default function AppSidebar() {
               </div>
             </Button>
             <Button
-              onClick={() => navigate("/requests/view")}
+              onClick={() => navigate("/requests/list")}
               className="w-full"
             >
               <div className="flex flex-row items-center w-full gap-1">
@@ -82,32 +82,6 @@ export default function AppSidebar() {
               </div>
             </Button>
           </>
-        ) : (
-          <></>
-        )}
-        {user.data && user.data.role == "client" ? (
-          <Button
-            onClick={() => navigate("/request/create")}
-            className="w-full"
-          >
-            <div className="flex flex-row items-center w-full gap-1">
-              <BookIcon />
-              <span>New Document Request</span>
-            </div>
-          </Button>
-        ) : (
-          <></>
-        )}
-        {user.data && staff_roles.includes(user.data.role) ? (
-          <Button
-            onClick={() => navigate("/documents/upload")}
-            className="w-full"
-          >
-            <div className="flex flex-row items-center w-full gap-1">
-              <BookIcon />
-              <span>Upload Document</span>
-            </div>
-          </Button>
         ) : (
           <></>
         )}
@@ -135,6 +109,57 @@ export default function AppSidebar() {
               <div className="flex flex-row items-center w-full gap-1">
                 <LogoutIcon />
                 <span>Logout</span>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        {user.data && user.data.role == "client" ? (
+          <>
+            <p className="text-sm text-center sm:text-left font-bold">
+              Client Actions
+            </p>
+            <Button onClick={() => navigate("/documents/")} className="w-full">
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>View Documents</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/request/create")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>New Document Request</span>
+              </div>
+            </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        {user.data && staff_roles.includes(user.data.role) ? (
+          <>
+            <p className="text-sm text-center sm:text-left font-bold">
+              Staff Actions
+            </p>
+            <Button
+              onClick={() => navigate("/documents/upload")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>Upload Document</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/documents/staff/")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>View Documents (Staff)</span>
               </div>
             </Button>
           </>

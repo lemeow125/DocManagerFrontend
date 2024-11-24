@@ -161,6 +161,7 @@ export type DocumentType = {
   name: string;
   document_type: string;
   number_pages: number;
+  file?: string;
   ocr_metadata: string;
   date_uploaded: string;
 };
@@ -185,10 +186,83 @@ export async function DocumentsAPI() {
     });
 }
 
+export async function StaffDocumentsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/documents/list/staff/", config)
+    .then((response) => {
+      return response.data as DocumentType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
 export async function DocmentCreateAPI(document: FormData) {
   const config = await GetConfig();
   return instance
     .post("api/v1/documents/upload/", document, config)
+    .then((response) => {
+      return [true, response.data as DocumentType];
+    })
+    .catch((error) => {
+      console.log("Error creating document");
+      console.log(error.response.data["detail"]);
+      return [false, error.response.data["detail"]];
+    });
+}
+
+// Document Requests
+
+export type DocumentRequestUnitCreateType = {
+  document: number;
+  copies: number;
+};
+
+export type DocumentRequestCreateType = {
+  college: string;
+  type: "softcopy" | "hardcopy";
+  purpose: string;
+  documents: DocumentRequestUnitCreateType[];
+};
+
+export type DocumentRequestUnitType = {
+  id: number;
+  document: DocumentType;
+  copies: number;
+};
+
+export type DocumentRequestType = {
+  id: number;
+  requester: string;
+  college: string;
+  status: "pending" | "approved" | "denied";
+  type: "softcopy" | "hardcopy";
+  purpose: string;
+  documents: DocumentRequestUnitType[];
+  date_requested: string;
+};
+
+export async function DocumentRequestsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/requests/list/", config)
+    .then((response) => {
+      return response.data as DocumentRequestType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
+export async function DocmentRequestCreateAPI(
+  document: DocumentRequestCreateType
+) {
+  const config = await GetConfig();
+  return instance
+    .post("api/v1/requests/create/", document, config)
     .then((response) => {
       return [true, response.data as DocumentType];
     })
