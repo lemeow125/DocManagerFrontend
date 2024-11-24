@@ -13,6 +13,9 @@ import DashboardPage from "./pages/DashboardPage";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ProfilePage from "./pages/ProfilePage";
+import UploadDocumentPage from "./pages/UploadDocumentPage";
+import Restrictor from "./components/StaffOnlyPage";
+import StaffOnlyPage from "./components/StaffOnlyPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -20,7 +23,8 @@ const router = createHashRouter([
     path: "/",
     element: (
       <>
-        <Revalidator /> <LoginPage />
+        <Revalidator />
+        <LoginPage />
       </>
     ),
   },
@@ -43,6 +47,19 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <ProfilePage />
+      </>
+    ),
+  },
+  {
+    path: "/documents/upload",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffOnlyPage>
+          <UploadDocumentPage />
+        </StaffOnlyPage>
       </>
     ),
   },

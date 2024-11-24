@@ -11,7 +11,7 @@ import { useSidebar } from "@/components/ui/sidebar";
 // import { useNavigate } from "react-router";
 import { Separator } from "./ui/separator";
 import { useQuery } from "@tanstack/react-query";
-import { setAccessToken, setRefreshToken, UserAPI } from "./API";
+import { setAccessToken, setRefreshToken, staff_roles, UserAPI } from "./API";
 import BookIcon from "./icons/bookicon";
 import DashboardIcon from "./icons/dashboardicon";
 import { Button } from "./ui/button";
@@ -30,7 +30,6 @@ export default function AppSidebar() {
   const authenticated = useSelector((state: RootState) => state.auth.value);
   const { toggleSidebar } = useSidebar();
   const navigate = useNavigate();
-  // const navigation = useNavigate();
   return (
     <Sidebar>
       <SidebarHeader>
@@ -94,6 +93,19 @@ export default function AppSidebar() {
             <div className="flex flex-row items-center w-full gap-1">
               <BookIcon />
               <span>New Document Request</span>
+            </div>
+          </Button>
+        ) : (
+          <></>
+        )}
+        {user.data && staff_roles.includes(user.data.role) ? (
+          <Button
+            onClick={() => navigate("/documents/upload")}
+            className="w-full"
+          >
+            <div className="flex flex-row items-center w-full gap-1">
+              <BookIcon />
+              <span>Upload Document</span>
             </div>
           </Button>
         ) : (

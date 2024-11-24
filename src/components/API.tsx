@@ -66,6 +66,7 @@ export function ParseError(error: { response: { data: string } }) {
 }
 
 // User
+export const staff_roles = ["head", "admin", "planning", "staff"];
 
 export type UserType = {
   id: number;
@@ -150,5 +151,50 @@ export async function UserAPI() {
     .catch((error) => {
       console.log(error.message);
       return error;
+    });
+}
+
+// Documents
+
+export type DocumentType = {
+  id: number;
+  name: string;
+  document_type: string;
+  number_pages: number;
+  ocr_metadata: string;
+  date_uploaded: string;
+};
+
+export type DocumentCreateType = {
+  name: string;
+  file: File | null;
+  document_type: string;
+  number_pages: number;
+};
+
+export async function DocumentsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/documents/list/", config)
+    .then((response) => {
+      return response.data as DocumentType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
+export async function DocmentCreateAPI(document: FormData) {
+  const config = await GetConfig();
+  return instance
+    .post("api/v1/documents/upload/", document, config)
+    .then((response) => {
+      return [true, response.data as DocumentType];
+    })
+    .catch((error) => {
+      console.log("Error creating document");
+      console.log(error.response.data["detail"]);
+      return [false, error.response.data["detail"]];
     });
 }
