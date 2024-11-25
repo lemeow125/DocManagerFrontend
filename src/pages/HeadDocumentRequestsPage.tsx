@@ -219,7 +219,7 @@ export default function HeadDocumentRequestsPage() {
                     {document_request.date_requested}
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex-col space-y-5">
+                    {document_request.status == "pending" ? (
                       <div className="flex-col space-y-5">
                         <Button
                           onClick={() =>
@@ -244,16 +244,49 @@ export default function HeadDocumentRequestsPage() {
                           Deny
                         </Button>
                       </div>
-                    </div>
+                    ) : (
+                      <p className="text-left font-medium">
+                        N/A (Request has been finalized)
+                      </p>
+                    )}
                   </TableCell>
                 </TableRow>
               ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={7}>Total</TableCell>
+              <TableCell colSpan={8}>Total</TableCell>
               <TableCell className="text-right">
-                {document_requests.data ? document_requests.data.length : 0}
+                {document_requests.data
+                  ? document_requests.data
+                      .filter(
+                        (document_request: DocumentRequestType) =>
+                          search_term.includes(String(document_request.id)) ||
+                          document_request.requester
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase()) ||
+                          document_request.college
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase()) ||
+                          document_request.status
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase()) ||
+                          document_request.type
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase()) ||
+                          document_request.purpose
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase()) ||
+                          document_request.date_requested
+                            .toLowerCase()
+                            .includes(search_term.toLowerCase())
+                      )
+                      .filter((document_request: DocumentRequestType) =>
+                        view_pending_only
+                          ? document_request.status == "pending"
+                          : true
+                      ).length
+                  : 0}
               </TableCell>
             </TableRow>
           </TableFooter>

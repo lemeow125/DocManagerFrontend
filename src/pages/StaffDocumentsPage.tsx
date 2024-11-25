@@ -104,7 +104,25 @@ export default function StaffDocumentsPage() {
             <TableRow>
               <TableCell colSpan={4}>Total</TableCell>
               <TableCell className="text-right">
-                {documents.data ? documents.data.length : 0}
+                {documents.data
+                  ? documents.data.filter(
+                      (document: DocumentType) =>
+                        search_term.includes(String(document.id)) ||
+                        document.name
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document.document_type
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        search_term.includes(String(document.number_pages)) ||
+                        document.ocr_metadata
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document.date_uploaded
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase())
+                    ).length
+                  : 0}
               </TableCell>
             </TableRow>
           </TableFooter>

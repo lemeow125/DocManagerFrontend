@@ -171,7 +171,30 @@ export default function DocumentRequestsPage() {
             <TableRow>
               <TableCell colSpan={7}>Total</TableCell>
               <TableCell className="text-right">
-                {document_requests.data ? document_requests.data.length : 0}
+                {document_requests.data
+                  ? document_requests.data.filter(
+                      (document_request: DocumentRequestType) =>
+                        search_term.includes(String(document_request.id)) ||
+                        document_request.requester
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document_request.college
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document_request.status
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document_request.type
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document_request.purpose
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase()) ||
+                        document_request.date_requested
+                          .toLowerCase()
+                          .includes(search_term.toLowerCase())
+                    ).length
+                  : 0}
               </TableCell>
             </TableRow>
           </TableFooter>
