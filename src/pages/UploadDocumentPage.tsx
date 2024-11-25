@@ -46,7 +46,8 @@ export default function UploadDocumentPage() {
     },
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
-      setError("Updated successfully");
+      queryClient.invalidateQueries({ queryKey: ["client_documents"] });
+      setError("");
       toast(
         `Document uploaded successfuly,  ${
           typeof data[1] == "object" ? "ID:" + data[1].id : ""

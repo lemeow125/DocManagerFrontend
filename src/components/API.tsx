@@ -245,7 +245,7 @@ export type DocumentRequestType = {
 };
 
 export type DocumentRequestUpdateType = {
-  status: "pending" | "approved" | "denied";
+  status: string;
 };
 
 export async function HeadDocumentRequestsAPI() {
@@ -274,7 +274,7 @@ export async function DocumentRequestsAPI() {
     });
 }
 
-export async function DocmentRequestCreateAPI(
+export async function DocumentRequestCreateAPI(
   document_request: DocumentRequestCreateType
 ) {
   const config = await GetConfig();
@@ -285,24 +285,22 @@ export async function DocmentRequestCreateAPI(
     })
     .catch((error) => {
       console.log("Error creating document");
-      console.log(error.response.data["detail"]);
       return [false, error.response.data["detail"]];
     });
 }
 
-export async function DocmentRequestUpdateAPI(
+export async function DocumentRequestUpdateAPI(
   document_request: DocumentRequestUpdateType,
   id: number
 ) {
   const config = await GetConfig();
   return instance
-    .patch(`api/v1/requests/update/${id}`, document_request, config)
+    .patch(`api/v1/requests/update/${id}/`, document_request, config)
     .then((response) => {
       return [true, response.data as DocumentType];
     })
     .catch((error) => {
       console.log("Error creating document");
-      console.log(error.response.data["detail"]);
-      return [false, error.response.data["detail"]];
+      return [false, error.response.data["error"]];
     });
 }
