@@ -269,18 +269,6 @@ export async function DocumentCreateAPI(document: FormData) {
 
 // Document Requests
 
-export type DocumentRequestUnitCreateType = {
-  document: number;
-  copies: number;
-};
-
-export type DocumentRequestCreateType = {
-  college: string;
-  type: "softcopy" | "hardcopy";
-  purpose: string;
-  documents: DocumentRequestUnitCreateType[];
-};
-
 export type DocumentRequestUnitType = {
   id: number;
   document: DocumentType;
@@ -300,6 +288,18 @@ export type DocumentRequestType = {
 
 export type DocumentRequestUpdateType = {
   status: string;
+};
+
+export type DocumentRequestUnitCreateType = {
+  document: number;
+  copies: number;
+};
+
+export type DocumentRequestCreateType = {
+  college: string;
+  type: string;
+  purpose: string;
+  documents: DocumentRequestUnitCreateType[];
 };
 
 export async function HeadDocumentRequestsAPI() {
@@ -335,7 +335,7 @@ export async function DocumentRequestCreateAPI(
   return instance
     .post("api/v1/requests/create/", document_request, config)
     .then((response) => {
-      return [true, response.data as DocumentType];
+      return [true, response.data as DocumentRequestType];
     })
     .catch((error) => {
       console.log("Error creating document");

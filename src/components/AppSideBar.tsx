@@ -130,7 +130,7 @@ export default function AppSidebar() {
               </div>
             </Button>
             <Button
-              onClick={() => navigate("/request/create")}
+              onClick={() => navigate("/requests/create")}
               className="w-full"
             >
               <div className="flex flex-row items-center w-full gap-1">

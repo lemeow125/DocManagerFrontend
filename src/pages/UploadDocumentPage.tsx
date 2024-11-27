@@ -90,7 +90,6 @@ export default function UploadDocumentPage() {
                         name: e.target.value,
                       });
                     }}
-                    id="name"
                     placeholder="Name of document"
                   />
                 </div>
@@ -108,7 +107,6 @@ export default function UploadDocumentPage() {
                           });
                         }
                       }}
-                      id="name"
                       placeholder="# of pages"
                     />
                   </div>

@@ -24,6 +24,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ActivationPage from "./pages/ActivationPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
+import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -97,6 +98,17 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <DocumentRequestsPage />
+      </>
+    ),
+  },
+  {
+    path: "/requests/create/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <CreateDocumentRequestPage />
       </>
     ),
   },
