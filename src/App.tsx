@@ -20,6 +20,8 @@ import DocumentRequestsPage from "./pages/DocumentRequestsPage";
 import ClientDocumentsPage from "./pages/ClientDocumentsPage";
 import HeadOnlyPage from "./components/HeadOnlyPage";
 import HeadDocumentRequestsPage from "./pages/HeadDocumentRequestsPage";
+import RegisterPage from "./pages/RegisterPage";
+import ActivationPage from "./pages/ActivationPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -31,6 +33,19 @@ const router = createHashRouter([
         <LoginPage />
       </>
     ),
+  },
+  {
+    path: "/register/",
+    element: (
+      <>
+        <Revalidator />
+        <RegisterPage />
+      </>
+    ),
+  },
+  {
+    path: "/activation/:uid/:token/",
+    element: <ActivationPage />,
   },
   {
     path: "/dashboard/",
@@ -119,8 +134,6 @@ const router = createHashRouter([
     path: "*",
     element: (
       <>
-        <Header />
-        <AppSidebar />
         <ErrorPage statusCode={404} errorMessage={"Page not found"} />
       </>
     ),

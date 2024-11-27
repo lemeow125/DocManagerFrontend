@@ -80,7 +80,6 @@ export type UserType = {
 
 export type RegisterType = {
   email: string;
-  username: string;
   password: string;
   first_name: string;
   last_name: string;
@@ -89,6 +88,23 @@ export type RegisterType = {
 export type LoginType = {
   email: string;
   password: string;
+};
+
+export type ActivationType = {
+  uid: string;
+  token: string;
+};
+
+export type ResetPasswordConfirmType = {
+  uid: string;
+  token: string;
+  new_password: string;
+};
+
+export type AddEquipmentType = {
+  name: string;
+  description: string;
+  category?: string;
 };
 
 export function RegisterAPI(info: RegisterType) {
@@ -151,6 +167,44 @@ export async function UserAPI() {
     .catch((error) => {
       console.log(error.message);
       return error;
+    });
+}
+
+export function ActivationAPI(activation: ActivationType) {
+  return instance
+    .post("api/v1/accounts/users/activation/", activation)
+    .then(() => {
+      console.log("Activation Success");
+      return true;
+    })
+    .catch(() => {
+      console.log("Activation failed");
+      return false;
+    });
+}
+export function ResetPasswordAPI(email: string) {
+  return instance
+    .post("api/v1/accounts/users/reset_password/", { email: email })
+    .then(() => {
+      console.log("Activation Success");
+      return true;
+    })
+    .catch(() => {
+      console.log("Activation failed");
+      return false;
+    });
+}
+
+export function ResetPasswordConfirmAPI(info: ResetPasswordConfirmType) {
+  return instance
+    .post("api/v1/accounts/users/reset_password_confirm/", info)
+    .then(() => {
+      console.log("Reset Success");
+      return true;
+    })
+    .catch(() => {
+      console.log("Reset failed");
+      return false;
     });
 }
 

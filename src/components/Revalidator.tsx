@@ -15,7 +15,7 @@ export default function Revalidator() {
 
   useEffect(() => {
     if (!authenticated && rechecked) {
-      if (location.pathname !== "/") {
+      if (location.pathname !== "/" && location.pathname !== "/register/") {
         navigate("/");
         toast("Please log in to continue", {
           position: "bottom-center",
@@ -46,6 +46,7 @@ export default function Revalidator() {
             progress: undefined,
             theme: "light",
           });
+          navigate("/dashboard/");
         } else {
           await setRefreshToken("");
           await setAccessToken("");

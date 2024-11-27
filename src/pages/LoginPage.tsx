@@ -1,6 +1,5 @@
 import { LoginAPI } from "@/components/API";
 import { auth_toggle } from "@/components/plugins/redux/slices/AuthSlice";
-import { RootState } from "@/components/plugins/redux/Store";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,8 +12,8 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 export default function LoginPage() {
@@ -26,13 +25,6 @@ export default function LoginPage() {
     password: "",
     remember: false,
   });
-  const authenticated = useSelector((state: RootState) => state.auth.value);
-  useEffect(() => {
-    if (authenticated) {
-      navigate("/dashboard/");
-      console.log("Already logged in. Redirecting to dashboard page");
-    }
-  }, [authenticated, navigate]);
   return (
     <div className="flex h-screen w-full items-center justify-center p-4">
       <Card className="w-[350px]">
@@ -89,6 +81,7 @@ export default function LoginPage() {
           >
             Login
           </Button>
+          <Button onClick={() => navigate("/register/")}>Register</Button>
           <div className="flex flex-row items-center gap-1">
             <Checkbox
               checked={user.remember}
