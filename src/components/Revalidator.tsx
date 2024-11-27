@@ -14,8 +14,14 @@ export default function Revalidator() {
   const [rechecked, setRechecked] = useState(false);
 
   useEffect(() => {
+    const public_routes = [
+      "/",
+      "/register/",
+      "reset_password/",
+      "/reset_password/confirm/",
+    ];
     if (!authenticated && rechecked) {
-      if (location.pathname !== "/" && location.pathname !== "/register/") {
+      if (!public_routes.indexOf(location.pathname)) {
         navigate("/");
         toast("Please log in to continue", {
           position: "bottom-center",

@@ -200,11 +200,11 @@ export function ResetPasswordConfirmAPI(info: ResetPasswordConfirmType) {
     .post("api/v1/accounts/users/reset_password_confirm/", info)
     .then(() => {
       console.log("Reset Success");
-      return true;
+      return [true, 0];
     })
-    .catch(() => {
+    .catch((error) => {
       console.log("Reset failed");
-      return false;
+      return [false, ParseError(error)];
     });
 }
 

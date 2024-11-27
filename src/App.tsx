@@ -22,6 +22,8 @@ import HeadOnlyPage from "./components/HeadOnlyPage";
 import HeadDocumentRequestsPage from "./pages/HeadDocumentRequestsPage";
 import RegisterPage from "./pages/RegisterPage";
 import ActivationPage from "./pages/ActivationPage";
+import ResetPasswordPage from "./pages/ResetPasswordPage";
+import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -40,6 +42,24 @@ const router = createHashRouter([
       <>
         <Revalidator />
         <RegisterPage />
+      </>
+    ),
+  },
+  {
+    path: "/reset_password/",
+    element: (
+      <>
+        <Revalidator />
+        <ResetPasswordPage />
+      </>
+    ),
+  },
+  {
+    path: "/reset_password/confirm/:uid/:token/",
+    element: (
+      <>
+        <Revalidator />
+        <ResetPasswordConfirmPage />
       </>
     ),
   },
