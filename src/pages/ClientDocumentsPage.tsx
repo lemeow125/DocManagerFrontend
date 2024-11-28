@@ -21,7 +21,7 @@ export default function ClientDocumentsPage() {
     queryKey: ["client_documents"],
     queryFn: DocumentsAPI,
   });
-  if (documents.isLoading) {
+  if (documents.isLoading || !documents.data) {
     return <LoadingPage />;
   }
   if (documents.isError) {

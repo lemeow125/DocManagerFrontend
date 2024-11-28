@@ -2,10 +2,8 @@ import {
   StaffDocumentRequestsAPI,
   DocumentRequestType,
   DocumentRequestUnitType,
-  DocumentRequestUpdateAPI,
-  DocumentRequestUpdateType,
 } from "@/components/API";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
 import {
@@ -21,59 +19,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "react-toastify";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogContent,
   DialogTitle,
   DialogTrigger,
+  DialogContent,
 } from "@/components/ui/dialog";
 
-export default function HeadDocumentRequestsPage() {
-  const [error, setError] = useState("");
-  const queryClient = useQueryClient();
-  const update_mutation = useMutation({
-    mutationFn: async ({
-      document_request,
-      id,
-    }: {
-      document_request: DocumentRequestUpdateType;
-      id: number;
-    }) => {
-      const data = await DocumentRequestUpdateAPI(document_request, id);
-      if (data[0] != true) {
-        return Promise.reject(new Error(JSON.stringify(data[1])));
-      }
-      return data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["client_document_requests"] });
-      queryClient.invalidateQueries({
-        queryKey: ["staff_document_requests"],
-      });
-      setError("");
-      toast(
-        `Document uploaded successfuly,  ${
-          typeof data[1] == "object" ? "ID:" + data[1].id : ""
-        }`,
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }
-      );
-    },
-    onError: (error) => {
-      setError(String(error));
-    },
-  });
+export default function StaffDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
   const [view_pending_only, setViewPendingOnly] = useState(false);
   const document_requests = useQuery({
@@ -113,7 +68,6 @@ export default function HeadDocumentRequestsPage() {
           />
           <Label htmlFor="name">Show Pending Only</Label>
         </div>
-        <Label className="text-red-600 w-max">{error}</Label>
         <Table className="w-[840px]">
           <TableCaption>Document Requests</TableCaption>
           <TableHeader>
@@ -126,7 +80,6 @@ export default function HeadDocumentRequestsPage() {
               <TableHead>Documents Requested</TableHead>
               <TableHead>Type</TableHead>
               <TableHead>Date Requested</TableHead>
-              <TableHead className="text-right">Action</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -276,44 +229,12 @@ export default function HeadDocumentRequestsPage() {
                   <TableCell className="text-left">
                     {document_request.date_requested}
                   </TableCell>
-                  <TableCell className="text-right">
-                    {document_request.status == "pending" ? (
-                      <div className="flex-col space-y-5">
-                        <Button
-                          onClick={() =>
-                            update_mutation.mutate({
-                              document_request: { status: "approved" },
-                              id: document_request.id,
-                            })
-                          }
-                          className="w-full"
-                        >
-                          Approve
-                        </Button>
-                        <Button
-                          onClick={() =>
-                            update_mutation.mutate({
-                              document_request: { status: "denied" },
-                              id: document_request.id,
-                            })
-                          }
-                          className="w-full"
-                        >
-                          Deny
-                        </Button>
-                      </div>
-                    ) : (
-                      <p className="text-left font-medium">
-                        N/A (Request has been finalized)
-                      </p>
-                    )}
-                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={8}>Total</TableCell>
+              <TableCell colSpan={7}>Total</TableCell>
               <TableCell className="text-right">
                 {document_requests.data
                   ? document_requests.data

@@ -54,10 +54,9 @@ export default function CreateDocumentRequestPage() {
       return data;
     },
     onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["document_requests"] });
       queryClient.invalidateQueries({ queryKey: ["client_document_requests"] });
       queryClient.invalidateQueries({
-        queryKey: ["head_document_requests"],
+        queryKey: ["staff_document_requests"],
       });
       setError("");
       toast(
@@ -81,7 +80,7 @@ export default function CreateDocumentRequestPage() {
       setError(String(error));
     },
   });
-  if (documents.isLoading) {
+  if (documents.isLoading || !documents.data) {
     return <LoadingPage />;
   }
   if (documents.isError) {

@@ -17,7 +17,12 @@ export default function DashboardPage() {
     queryKey: ["client_documents"],
     queryFn: DocumentsAPI,
   });
-  if (document_requests.isLoading || documents.isLoading) {
+  if (
+    document_requests.isLoading ||
+    documents.isLoading ||
+    !document_requests.data ||
+    !documents.data
+  ) {
     return <LoadingPage />;
   }
   if (document_requests.isError || documents.isError) {

@@ -16,7 +16,7 @@ import ProfilePage from "./pages/ProfilePage";
 import UploadDocumentPage from "./pages/UploadDocumentPage";
 import StaffOnlyPage from "./components/StaffOnlyPage";
 import StaffDocumentsPage from "./pages/StaffDocumentsPage";
-import DocumentRequestsPage from "./pages/DocumentRequestsPage";
+import DocumentRequestsPage from "./pages/ClientDocumentRequestsPage";
 import ClientDocumentsPage from "./pages/ClientDocumentsPage";
 import HeadOnlyPage from "./components/HeadOnlyPage";
 import HeadDocumentRequestsPage from "./pages/HeadDocumentRequestsPage";
@@ -26,6 +26,7 @@ import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
+import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -92,17 +93,6 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "/requests/list/",
-    element: (
-      <>
-        <Header />
-        <AppSidebar />
-        <Revalidator />
-        <DocumentRequestsPage />
-      </>
-    ),
-  },
-  {
     path: "/requests/create/",
     element: (
       <>
@@ -134,6 +124,28 @@ const router = createHashRouter([
         <StaffOnlyPage>
           <StaffDocumentsPage />
         </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/requests/list/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <DocumentRequestsPage />
+      </>
+    ),
+  },
+  {
+    path: "/requests/list/staff/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffDocumentRequestsPage />
       </>
     ),
   },

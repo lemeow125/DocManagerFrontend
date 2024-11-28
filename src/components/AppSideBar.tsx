@@ -163,7 +163,7 @@ export default function AppSidebar() {
             >
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
-                <span>Upload Document (Staff/Head)</span>
+                <span>Upload Document (Staff)</span>
               </div>
             </Button>
             {user.data.role == "head" ? (
@@ -194,7 +194,7 @@ export default function AppSidebar() {
             >
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
-                <span>View Documents (Staff/Head)</span>
+                <span>View Documents (Staff)</span>
               </div>
             </Button>
           </>

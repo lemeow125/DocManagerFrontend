@@ -21,7 +21,7 @@ export default function StaffDocumentsPage() {
     queryKey: ["staff_documents"],
     queryFn: StaffDocumentsAPI,
   });
-  if (documents.isLoading) {
+  if (documents.isLoading || !documents.data) {
     return <LoadingPage />;
   }
   if (documents.isError) {

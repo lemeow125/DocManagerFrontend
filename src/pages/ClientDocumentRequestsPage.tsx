@@ -27,10 +27,10 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
-export default function DocumentRequestsPage() {
+export default function ClientDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
   const document_requests = useQuery({
-    queryKey: ["document_requests"],
+    queryKey: ["client_document_requests"],
     queryFn: DocumentRequestsAPI,
   });
   if (document_requests.isLoading) {

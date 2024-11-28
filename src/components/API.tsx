@@ -302,7 +302,7 @@ export type DocumentRequestCreateType = {
   documents: DocumentRequestUnitCreateType[];
 };
 
-export async function HeadDocumentRequestsAPI() {
+export async function StaffDocumentRequestsAPI() {
   const config = await GetConfig();
   return instance
     .get("api/v1/requests/list/head/", config)
