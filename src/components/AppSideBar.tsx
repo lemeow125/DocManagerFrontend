@@ -157,15 +157,6 @@ export default function AppSidebar() {
             <p className="text-sm text-center sm:text-left font-bold">
               Staff Actions
             </p>
-            <Button
-              onClick={() => navigate("/documents/upload")}
-              className="w-full"
-            >
-              <div className="flex flex-row items-center w-full gap-1">
-                <BookIcon />
-                <span>Upload Document (Staff)</span>
-              </div>
-            </Button>
             {user.data.role == "head" ? (
               <Button
                 onClick={() => navigate("/requests/list/head/")}
@@ -187,6 +178,15 @@ export default function AppSidebar() {
                 </div>
               </Button>
             )}
+            <Button
+              onClick={() => navigate("/documents/upload")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>Upload Document (Staff)</span>
+              </div>
+            </Button>
 
             <Button
               onClick={() => navigate("/documents/list/staff/")}
