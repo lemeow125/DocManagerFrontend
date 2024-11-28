@@ -19,6 +19,14 @@ import {
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Label } from "@/components/ui/label";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { toast } from "react-toastify";
 export default function DocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
   const document_requests = useQuery({
@@ -108,52 +116,96 @@ export default function DocumentRequestsPage() {
                   </TableCell>
                   <TableCell className="text-left">
                     {document_request.status == "approved" ? (
-                      <Table>
-                        <TableHeader>
-                          <TableRow>
-                            <TableHead className="text-left">ID</TableHead>
-                            <TableHead className="text-left">
-                              File Name
-                            </TableHead>
-                            <TableHead className="text-left">Type</TableHead>
-                            <TableHead className="text-right">Link</TableHead>
-                          </TableRow>
-                        </TableHeader>
-                        <TableBody className="overflow-y-scroll h-10">
-                          {document_request.documents.map(
-                            (
-                              document_request_unit: DocumentRequestUnitType
-                            ) => (
-                              <TableRow key={document_request.id}>
-                                <TableCell className="text-left font-medium">
-                                  {document_request.id}
-                                </TableCell>
-                                <TableCell className="text-left font-medium">
-                                  {document_request_unit.document.name}
-                                </TableCell>
-                                <TableCell className="text-left font-medium">
-                                  {document_request_unit.document.document_type}
-                                </TableCell>
-                                <TableCell className="text-right font-medium">
-                                  <a href={document_request_unit.document.file}>
-                                    Preview
-                                  </a>
+                      <Dialog>
+                        <DialogTitle hidden={true}>View</DialogTitle>
+                        <DialogTrigger asChild>
+                          <Button
+                            onClick={() =>
+                              toast(
+                                "Enjoying DDMS? We'd love to hear your feedback, take the survey!",
+                                {
+                                  position: "top-right",
+                                  autoClose: 2000,
+                                  hideProgressBar: false,
+                                  closeOnClick: true,
+                                  pauseOnHover: true,
+                                  draggable: true,
+                                  progress: undefined,
+                                  theme: "light",
+                                }
+                              )
+                            }
+                            variant="outline"
+                          >
+                            View
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent>
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead className="text-left">ID</TableHead>
+                                <TableHead className="text-left">
+                                  File Name
+                                </TableHead>
+                                <TableHead className="text-left">
+                                  Type
+                                </TableHead>
+                                <TableHead className="text-left">
+                                  Copies
+                                </TableHead>
+                                <TableHead className="text-right">
+                                  Link
+                                </TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody className="overflow-y-scroll h-10">
+                              {document_request.documents.map(
+                                (
+                                  document_request_unit: DocumentRequestUnitType
+                                ) => (
+                                  <TableRow key={document_request_unit.id}>
+                                    <TableCell className="text-left font-medium">
+                                      {document_request_unit.id}
+                                    </TableCell>
+                                    <TableCell className="text-left font-medium">
+                                      {document_request_unit.document.name}
+                                    </TableCell>
+                                    <TableCell className="text-left font-medium">
+                                      {
+                                        document_request_unit.document
+                                          .document_type
+                                      }
+                                    </TableCell>
+                                    <TableCell className="text-left font-medium">
+                                      {document_request_unit.copies}
+                                    </TableCell>
+                                    <TableCell className="text-right font-medium">
+                                      <a
+                                        href={
+                                          document_request_unit.document.file
+                                        }
+                                      >
+                                        Preview
+                                      </a>
+                                    </TableCell>
+                                  </TableRow>
+                                )
+                              )}
+                            </TableBody>
+                            <TableFooter>
+                              <TableRow>
+                                <TableCell colSpan={4}>Total</TableCell>
+                                <TableCell className="text-right">
+                                  {document_request.documents
+                                    ? document_request.documents.length
+                                    : 0}
                                 </TableCell>
                               </TableRow>
-                            )
-                          )}
-                        </TableBody>
-                        <TableFooter>
-                          <TableRow>
-                            <TableCell colSpan={3}>Total</TableCell>
-                            <TableCell className="text-right">
-                              {document_request.documents
-                                ? document_request.documents.length
-                                : 0}
-                            </TableCell>
-                          </TableRow>
-                        </TableFooter>
-                      </Table>
+                            </TableFooter>
+                          </Table>
+                        </DialogContent>
+                      </Dialog>
                     ) : (
                       "N/A (Request not approved)"
                     )}
