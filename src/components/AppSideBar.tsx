@@ -23,6 +23,7 @@ import PersonIcon from "./icons/personicon";
 import LogoutIcon from "./icons/logouticon";
 import { toast } from "react-toastify";
 import { auth_toggle } from "./plugins/redux/slices/AuthSlice";
+import PostIcon from "./icons/posticon";
 
 export default function AppSidebar() {
   const user = useQuery({ queryKey: ["user"], queryFn: UserAPI });
@@ -136,6 +137,15 @@ export default function AppSidebar() {
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
                 <span>New Document Request</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/questionnaires/create/")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <PostIcon />
+                <span>Feedback (Survey)</span>
               </div>
             </Button>
           </>

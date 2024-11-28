@@ -45,7 +45,6 @@ export default function StaffDocumentsPage() {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setSearchTerm(e.target.value)
             }
-            id="search_term"
           />
         </div>
         <Table className="w-[640px]">

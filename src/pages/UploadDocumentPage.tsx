@@ -118,12 +118,13 @@ export default function UploadDocumentPage() {
                       setDocument({ ...document, document_type: value })
                     }
                   >
-                    <SelectTrigger id="framework">
+                    <SelectTrigger>
                       <SelectValue placeholder="Select" />
                     </SelectTrigger>
                     <SelectContent position="popper">
                       <SelectItem value="hoa">HOA</SelectItem>
                       <SelectItem value="memorandum">Memorandum</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                   <div className="flex flex-col space-y-1.5">

@@ -358,3 +358,43 @@ export async function DocumentRequestUpdateAPI(
       return [false, error.response.data["error"]];
     });
 }
+
+// Questionnaires
+
+export type QustionnaireType = {
+  id?: number;
+  client?: string;
+  client_type: string;
+  sex: string;
+  age: number;
+  region_of_residence: string;
+  service_availed: string;
+  i_am_a: string;
+  i_am_a_other: string;
+  q1_answer: string;
+  q2_answer: string;
+  q3_answer: string;
+  sqd0_answer: string;
+  sqd1_answer: string;
+  sqd2_answer: string;
+  sqd3_answer: string;
+  sqd4_answer: string;
+  sqd5_answer: string;
+  sqd6_answer: string;
+  sqd7_answer: string;
+  sqd8_answer: string;
+  extra_suggestions: string;
+};
+
+export async function QuestionnaireSubmitAPI(questionnaire: QustionnaireType) {
+  const config = await GetConfig();
+  return instance
+    .post("api/v1/questionnaires/submit/", questionnaire, config)
+    .then((response) => {
+      return [true, response.data as QustionnaireType];
+    })
+    .catch((error) => {
+      console.log("Error submitting questionnaire");
+      return [false, error.response.data["detail"]];
+    });
+}

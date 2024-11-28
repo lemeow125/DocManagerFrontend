@@ -56,7 +56,6 @@ export default function DocumentRequestsPage() {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setSearchTerm(e.target.value)
             }
-            id="search_term"
           />
         </div>
         <Table className="w-[840px]">
@@ -115,71 +114,85 @@ export default function DocumentRequestsPage() {
                     {document_request.status}
                   </TableCell>
                   <TableCell className="text-left">
-                    {document_request.status == "approved" ? (
-                      <Dialog>
-                        <DialogTitle hidden={true}>View</DialogTitle>
-                        <DialogTrigger asChild>
-                          <Button
-                            onClick={() =>
-                              toast(
-                                "Enjoying DDMS? We'd love to hear your feedback, take the survey!",
-                                {
-                                  position: "top-right",
-                                  autoClose: 2000,
-                                  hideProgressBar: false,
-                                  closeOnClick: true,
-                                  pauseOnHover: true,
-                                  draggable: true,
-                                  progress: undefined,
-                                  theme: "light",
+                    <Dialog>
+                      <DialogTitle hidden={true}>View</DialogTitle>
+                      <DialogTrigger asChild>
+                        <Button
+                          onClick={() =>
+                            toast(
+                              "Enjoying DDMS? We'd love to hear your feedback, take the survey!",
+                              {
+                                position: "top-right",
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                              }
+                            )
+                          }
+                          variant="outline"
+                        >
+                          View
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent>
+                        <Table>
+                          <TableHeader>
+                            <TableRow>
+                              <TableHead className="text-left">ID</TableHead>
+                              <TableHead className="text-left">
+                                File Name
+                              </TableHead>
+                              <TableHead className="text-left">Type</TableHead>
+                              <TableHead
+                                className={
+                                  document_request.status == "approved"
+                                    ? "text-left"
+                                    : "text-right"
                                 }
-                              )
-                            }
-                            variant="outline"
-                          >
-                            View
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent>
-                          <Table>
-                            <TableHeader>
-                              <TableRow>
-                                <TableHead className="text-left">ID</TableHead>
-                                <TableHead className="text-left">
-                                  File Name
-                                </TableHead>
-                                <TableHead className="text-left">
-                                  Type
-                                </TableHead>
-                                <TableHead className="text-left">
-                                  Copies
-                                </TableHead>
+                              >
+                                Copies
+                              </TableHead>
+                              {document_request.status == "approved" ? (
                                 <TableHead className="text-right">
                                   Link
                                 </TableHead>
-                              </TableRow>
-                            </TableHeader>
-                            <TableBody className="overflow-y-scroll h-10">
-                              {document_request.documents.map(
-                                (
-                                  document_request_unit: DocumentRequestUnitType
-                                ) => (
-                                  <TableRow key={document_request_unit.id}>
-                                    <TableCell className="text-left font-medium">
-                                      {document_request_unit.id}
-                                    </TableCell>
-                                    <TableCell className="text-left font-medium">
-                                      {document_request_unit.document.name}
-                                    </TableCell>
-                                    <TableCell className="text-left font-medium">
-                                      {
-                                        document_request_unit.document
-                                          .document_type
-                                      }
-                                    </TableCell>
-                                    <TableCell className="text-left font-medium">
-                                      {document_request_unit.copies}
-                                    </TableCell>
+                              ) : (
+                                <></>
+                              )}
+                            </TableRow>
+                          </TableHeader>
+                          <TableBody className="overflow-y-scroll h-10">
+                            {document_request.documents.map(
+                              (
+                                document_request_unit: DocumentRequestUnitType
+                              ) => (
+                                <TableRow key={document_request_unit.id}>
+                                  <TableCell className="text-left font-medium">
+                                    {document_request_unit.id}
+                                  </TableCell>
+                                  <TableCell className="text-left font-medium">
+                                    {document_request_unit.document.name}
+                                  </TableCell>
+                                  <TableCell className="text-left font-medium">
+                                    {
+                                      document_request_unit.document
+                                        .document_type
+                                    }
+                                  </TableCell>
+                                  <TableCell
+                                    className={
+                                      document_request.status == "approved"
+                                        ? "text-left font-medium"
+                                        : "text-right font-medium"
+                                    }
+                                  >
+                                    {document_request_unit.copies}
+                                  </TableCell>
+                                  {document_request.status == "approved" ? (
                                     <TableCell className="text-right font-medium">
                                       <a
                                         href={
@@ -189,26 +202,32 @@ export default function DocumentRequestsPage() {
                                         Preview
                                       </a>
                                     </TableCell>
-                                  </TableRow>
-                                )
-                              )}
-                            </TableBody>
-                            <TableFooter>
-                              <TableRow>
-                                <TableCell colSpan={4}>Total</TableCell>
-                                <TableCell className="text-right">
-                                  {document_request.documents
-                                    ? document_request.documents.length
-                                    : 0}
-                                </TableCell>
-                              </TableRow>
-                            </TableFooter>
-                          </Table>
-                        </DialogContent>
-                      </Dialog>
-                    ) : (
-                      "N/A (Request not approved)"
-                    )}
+                                  ) : (
+                                    <></>
+                                  )}
+                                </TableRow>
+                              )
+                            )}
+                          </TableBody>
+                          <TableFooter>
+                            <TableRow>
+                              <TableCell
+                                colSpan={
+                                  document_request.status == "approved" ? 4 : 3
+                                }
+                              >
+                                Total
+                              </TableCell>
+                              <TableCell className="text-right">
+                                {document_request.documents
+                                  ? document_request.documents.length
+                                  : 0}
+                              </TableCell>
+                            </TableRow>
+                          </TableFooter>
+                        </Table>
+                      </DialogContent>
+                    </Dialog>
                   </TableCell>
                   <TableCell className="text-left">
                     {document_request.type}

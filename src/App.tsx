@@ -25,6 +25,7 @@ import ActivationPage from "./pages/ActivationPage";
 import ResetPasswordPage from "./pages/ResetPasswordPage";
 import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
+import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -159,6 +160,17 @@ const router = createHashRouter([
         <StaffOnlyPage>
           <UploadDocumentPage />
         </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/questionnaires/create/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <SubmitQuestionnairePage />
       </>
     ),
   },

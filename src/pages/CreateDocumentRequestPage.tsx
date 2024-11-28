@@ -160,7 +160,7 @@ export default function CreateDocumentRequestPage() {
                     })
                   }
                 >
-                  <SelectTrigger id="framework">
+                  <SelectTrigger>
                     <SelectValue placeholder="Select" />
                   </SelectTrigger>
                   <SelectContent position="popper">

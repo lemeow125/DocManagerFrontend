@@ -98,7 +98,6 @@ export default function HeadDocumentRequestsPage() {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setSearchTerm(e.target.value)
             }
-            id="search_term"
           />
         </div>
         <div className="self-start flex flex-row items-center text-center content-center gap-1">
