@@ -179,7 +179,7 @@ export default function AppSidebar() {
               </Button>
             )}
             <Button
-              onClick={() => navigate("/documents/upload")}
+              onClick={() => navigate("/documents/upload/")}
               className="w-full"
             >
               <div className="flex flex-row items-center w-full gap-1">
@@ -195,6 +195,15 @@ export default function AppSidebar() {
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
                 <span>View Documents (Staff)</span>
+              </div>
+            </Button>
+            <Button
+              onClick={() => navigate("/questionnaires/list/")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <PostIcon />
+                <span>View Questionnaires (Staff)</span>
               </div>
             </Button>
           </>

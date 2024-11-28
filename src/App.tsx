@@ -27,6 +27,7 @@ import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
 import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
+import StaffQuestionnairesPage from "./pages/StaffQuestionnairesPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -145,7 +146,9 @@ const router = createHashRouter([
         <Header />
         <AppSidebar />
         <Revalidator />
-        <StaffDocumentRequestsPage />
+        <StaffOnlyPage>
+          <StaffDocumentRequestsPage />
+        </StaffOnlyPage>
       </>
     ),
   },
@@ -183,6 +186,19 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <SubmitQuestionnairePage />
+      </>
+    ),
+  },
+  {
+    path: "/questionnaires/list/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffOnlyPage>
+          <StaffQuestionnairesPage />
+        </StaffOnlyPage>
       </>
     ),
   },

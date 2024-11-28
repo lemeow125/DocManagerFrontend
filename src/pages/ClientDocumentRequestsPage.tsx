@@ -33,7 +33,7 @@ export default function ClientDocumentRequestsPage() {
     queryKey: ["client_document_requests"],
     queryFn: DocumentRequestsAPI,
   });
-  if (document_requests.isLoading) {
+  if (document_requests.isLoading || !document_requests.data) {
     return <LoadingPage />;
   }
   if (document_requests.isError) {

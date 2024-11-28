@@ -361,9 +361,7 @@ export async function DocumentRequestUpdateAPI(
 
 // Questionnaires
 
-export type QustionnaireType = {
-  id?: number;
-  client?: string;
+export type QuestionnaireCreateType = {
   client_type: string;
   sex: string;
   age: number;
@@ -386,15 +384,56 @@ export type QustionnaireType = {
   extra_suggestions: string;
 };
 
-export async function QuestionnaireSubmitAPI(questionnaire: QustionnaireType) {
+export type QuestionnaireType = {
+  id: number;
+  client: string;
+  date_submitted: string;
+  client_type: string;
+  sex: string;
+  age: number;
+  region_of_residence: string;
+  service_availed: string;
+  i_am_a: string;
+  i_am_a_other: string;
+  q1_answer: string;
+  q2_answer: string;
+  q3_answer: string;
+  sqd0_answer: string;
+  sqd1_answer: string;
+  sqd2_answer: string;
+  sqd3_answer: string;
+  sqd4_answer: string;
+  sqd5_answer: string;
+  sqd6_answer: string;
+  sqd7_answer: string;
+  sqd8_answer: string;
+  extra_suggestions: string;
+};
+
+export async function QuestionnaireSubmitAPI(
+  questionnaire: QuestionnaireCreateType
+) {
   const config = await GetConfig();
   return instance
     .post("api/v1/questionnaires/submit/", questionnaire, config)
     .then((response) => {
-      return [true, response.data as QustionnaireType];
+      return [true, response.data as QuestionnaireType];
     })
     .catch((error) => {
       console.log("Error submitting questionnaire");
       return [false, error.response.data["detail"]];
+    });
+}
+
+export async function QuestionnairesAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/questionnaires/list/", config)
+    .then((response) => {
+      return response.data as QuestionnaireType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
     });
 }
