@@ -27,6 +27,8 @@ import {
   DialogTrigger,
   DialogContent,
 } from "@/components/ui/dialog";
+import { Link } from "react-router";
+import { Separator } from "@/components/ui/separator";
 
 export default function StaffDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
@@ -51,7 +53,7 @@ export default function StaffDocumentRequestsPage() {
     <div className="flex h-screen w-full items-center justify-center p-4">
       <div className="flex flex-col items-center justify-center text-center">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          {"Document Requests (Head View)"}
+          {"Document Requests (Staff View)"}
         </h1>
         <div className="self-start flex flex-row items-center text-center content-center">
           <Label htmlFor="name">Search</Label>
@@ -79,7 +81,9 @@ export default function StaffDocumentRequestsPage() {
               <TableHead>Status</TableHead>
               <TableHead>Documents Requested</TableHead>
               <TableHead>Type</TableHead>
+
               <TableHead>Date Requested</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -229,12 +233,33 @@ export default function StaffDocumentRequestsPage() {
                   <TableCell className="text-left">
                     {document_request.date_requested}
                   </TableCell>
+                  <TableCell className="text-right gap-y-4">
+                    {document_request.status == "pending" ? (
+                      <p>Request is Pending. Please wait for Finalization</p>
+                    ) : (
+                      <div className="flex-col">
+                        <Link
+                          to="/export/CRS01/"
+                          state={{ document_request: document_request }}
+                        >
+                          <Button>Export to CSR-01</Button>
+                        </Link>
+                        <Separator />
+                        <Link
+                          to="/export/CRS03/"
+                          state={{ document_request: document_request }}
+                        >
+                          <Button>Export to CSR-03</Button>
+                        </Link>
+                      </div>
+                    )}
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
           <TableFooter>
             <TableRow>
-              <TableCell colSpan={7}>Total</TableCell>
+              <TableCell colSpan={8}>Total</TableCell>
               <TableCell className="text-right">
                 {document_requests.data
                   ? document_requests.data

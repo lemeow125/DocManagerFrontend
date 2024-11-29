@@ -30,6 +30,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Link } from "react-router";
+import { Separator } from "@/components/ui/separator";
 
 export default function HeadDocumentRequestsPage() {
   const [error, setError] = useState("");
@@ -303,9 +305,21 @@ export default function HeadDocumentRequestsPage() {
                         </Button>
                       </div>
                     ) : (
-                      <p className="text-left font-medium">
-                        N/A (Request has been finalized)
-                      </p>
+                      <div className="flex-col space-y-5">
+                        <Link
+                          to="/export/CRS01/"
+                          state={{ document_request: document_request }}
+                        >
+                          <Button>Export to CSR-01</Button>
+                        </Link>
+                        <Separator />
+                        <Link
+                          to="/export/CRS03/"
+                          state={{ document_request: document_request }}
+                        >
+                          <Button>Export to CSR-03</Button>
+                        </Link>
+                      </div>
                     )}
                   </TableCell>
                 </TableRow>

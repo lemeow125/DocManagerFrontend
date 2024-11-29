@@ -28,6 +28,7 @@ import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
 import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
 import StaffQuestionnairesPage from "./pages/StaffQuestionnairesPage";
+import ExportCRS03 from "./pages/ExportCRS03";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -203,12 +204,18 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "*",
+    path: "/export/CRS03/",
     element: (
       <>
-        <ErrorPage statusCode={404} errorMessage={"Page not found"} />
+        <Header />
+        <AppSidebar />
+        <ExportCRS03 />
       </>
     ),
+  },
+  {
+    path: "*",
+    element: <ErrorPage statusCode={404} errorMessage={"Page not found"} />,
   },
 ]);
 export default function App() {

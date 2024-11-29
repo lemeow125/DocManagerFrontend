@@ -16,6 +16,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router";
 export default function StaffQuestionnairesPage() {
   const [search_term, setSearchTerm] = useState("");
   const questionnaires = useQuery({
@@ -93,7 +94,12 @@ export default function StaffQuestionnairesPage() {
                     {questionnaire.date_submitted}
                   </TableCell>
                   <TableCell className="text-right">
-                    <Button>Export</Button>
+                    <Link
+                      to="/export/0061/"
+                      state={{ questionnaire: questionnaire }}
+                    >
+                      <Button>Export to 006-1</Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))}
