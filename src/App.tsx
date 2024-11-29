@@ -28,7 +28,8 @@ import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
 import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
 import StaffQuestionnairesPage from "./pages/StaffQuestionnairesPage";
-import ExportCRS03 from "./pages/ExportCRS03";
+import ExportCRS03Page from "./pages/ExportCRS03Page";
+import ExportCRS01Page from "./pages/ExportCRS01Page";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -209,7 +210,23 @@ const router = createHashRouter([
       <>
         <Header />
         <AppSidebar />
-        <ExportCRS03 />
+        <Revalidator />
+        <StaffOnlyPage>
+          <ExportCRS03Page />
+        </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/export/CRS01/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffOnlyPage>
+          <ExportCRS01Page />
+        </StaffOnlyPage>
       </>
     ),
   },
