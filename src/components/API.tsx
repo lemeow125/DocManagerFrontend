@@ -67,6 +67,7 @@ export function ParseError(error: { response: { data: string } }) {
 
 // User
 export const staff_roles = ["head", "admin", "planning", "staff"];
+export const planning_roles = ["head", "admin", "planning"]; // Don't include staff
 
 export type UserType = {
   id: number;

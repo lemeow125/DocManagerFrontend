@@ -30,6 +30,8 @@ import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
 import StaffQuestionnairesPage from "./pages/StaffQuestionnairesPage";
 import ExportCRS03Page from "./pages/ExportCRS03Page";
 import ExportCRS01Page from "./pages/ExportCRS01Page";
+import Export0061Page from "./pages/Export0061Page";
+import PlanningOnlyPage from "./components/PlanningOnlyPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -198,9 +200,9 @@ const router = createHashRouter([
         <Header />
         <AppSidebar />
         <Revalidator />
-        <StaffOnlyPage>
+        <PlanningOnlyPage>
           <StaffQuestionnairesPage />
-        </StaffOnlyPage>
+        </PlanningOnlyPage>
       </>
     ),
   },
@@ -226,6 +228,19 @@ const router = createHashRouter([
         <Revalidator />
         <StaffOnlyPage>
           <ExportCRS01Page />
+        </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/export/0061/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffOnlyPage>
+          <Export0061Page />
         </StaffOnlyPage>
       </>
     ),
