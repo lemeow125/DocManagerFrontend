@@ -114,131 +114,129 @@ export default function CreateDocumentRequestPage() {
   }
 
   return (
-    <div className="flex h-screen w-full items-center justify-center p-4">
-      <div className="flex flex-col items-center justify-center text-center h-full gap-y-2">
-        <Card className="w-[1366px]">
-          <CardHeader>
-            <CardTitle>Create Request</CardTitle>
-            <CardDescription className="text-red-600">{error}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">College/Department</Label>
-                  <Input
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setDocumentRequest({
-                        ...document_request,
-                        college: e.target.value,
-                      });
-                    }}
-                    placeholder="College/Department of requester"
-                  />
-                </div>
-                <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Purpose</Label>
-                  <Input
-                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setDocumentRequest({
-                        ...document_request,
-                        purpose: e.target.value,
-                      });
-                    }}
-                    placeholder="Brief description as to why you require the requested documents"
-                  />
-                </div>
-                <Label htmlFor="framework">Request Type</Label>
-                <Select
-                  defaultValue={document_request.type}
-                  value={document_request.type}
-                  onValueChange={(value) =>
+    <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Create Request</CardTitle>
+          <CardDescription className="text-red-600">{error}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">College/Department</Label>
+                <Input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     setDocumentRequest({
                       ...document_request,
-                      type: value,
-                    })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="softcopy">Softcopy</SelectItem>
-                    <SelectItem value="hardcopy">Hardcopy</SelectItem>
-                  </SelectContent>
-                </Select>
-                <h1 className="text-2xl font-bold mb-4">Documents</h1>
-                <MultiSelect
-                  options={documents.data.map((document: DocumentType) => {
-                    return {
-                      value: document.id,
-                      label: document.name,
-                    };
-                  })}
-                  onValueChange={(values) => {
-                    setDocumentRequest((prevState) => ({
-                      ...prevState,
-                      documents: values.map((id) => ({
-                        document: parseInt(id, 10),
-                        copies: 1,
-                      })),
-                    }));
+                      college: e.target.value,
+                    });
                   }}
-                  defaultValue={[]}
-                  placeholder="Select documents"
-                  variant="inverted"
-                  animation={2}
-                  maxCount={3}
+                  placeholder="College/Department of requester"
                 />
-                <div className="mt-4">
-                  <h2 className="text-xl font-semibold">Selected Documents:</h2>
-                  <ul className="list-none space-y-2">
-                    {document_request.documents.map((doc, index) => (
-                      <li
-                        key={index}
-                        className="flex items-center justify-between"
-                      >
-                        <span>{getDocumentName(doc.document)}</span>
-                        <input
-                          type="number"
-                          min="1"
-                          value={doc.copies}
-                          onChange={(e) =>
-                            handleCopyChange(index, e.target.valueAsNumber)
-                          }
-                          className="w-16 pl-2 text-right border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
               </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button onClick={() => navigate("/dashboard/")} variant="outline">
-              Cancel
-            </Button>
-            <Button
-              onClick={() => {
-                if (document_request.type == "softcopy") {
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Purpose</Label>
+                <Input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDocumentRequest({
+                      ...document_request,
+                      purpose: e.target.value,
+                    });
+                  }}
+                  placeholder="Brief description as to why you require the requested documents"
+                />
+              </div>
+              <Label htmlFor="framework">Request Type</Label>
+              <Select
+                defaultValue={document_request.type}
+                value={document_request.type}
+                onValueChange={(value) =>
+                  setDocumentRequest({
+                    ...document_request,
+                    type: value,
+                  })
+                }
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Select" />
+                </SelectTrigger>
+                <SelectContent position="popper">
+                  <SelectItem value="softcopy">Softcopy</SelectItem>
+                  <SelectItem value="hardcopy">Hardcopy</SelectItem>
+                </SelectContent>
+              </Select>
+              <h1 className="text-2xl font-bold mb-4">Documents</h1>
+              <MultiSelect
+                options={documents.data.map((document: DocumentType) => {
+                  return {
+                    value: document.id,
+                    label: document.name,
+                  };
+                })}
+                onValueChange={(values) => {
                   setDocumentRequest((prevState) => ({
                     ...prevState,
-                    documents: prevState.documents.map((doc) => ({
-                      ...doc,
+                    documents: values.map((id) => ({
+                      document: parseInt(id, 10),
                       copies: 1,
                     })),
                   }));
-                }
-                create_mutation.mutate();
-                console.log(document_request);
-              }}
-            >
-              Submit
-            </Button>
-          </CardFooter>
-        </Card>
-      </div>
+                }}
+                defaultValue={[]}
+                placeholder="Select documents"
+                variant="inverted"
+                animation={2}
+                maxCount={3}
+              />
+              <div className="mt-4">
+                <h2 className="text-xl font-semibold">Selected Documents:</h2>
+                <ul className="list-none space-y-2">
+                  {document_request.documents.map((doc, index) => (
+                    <li
+                      key={index}
+                      className="flex items-center justify-between"
+                    >
+                      <span>{getDocumentName(doc.document)}</span>
+                      <input
+                        type="number"
+                        min="1"
+                        value={doc.copies}
+                        onChange={(e) =>
+                          handleCopyChange(index, e.target.valueAsNumber)
+                        }
+                        className="w-16 pl-2 text-right border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button onClick={() => navigate("/dashboard/")} variant="outline">
+            Cancel
+          </Button>
+          <Button
+            onClick={() => {
+              if (document_request.type == "softcopy") {
+                setDocumentRequest((prevState) => ({
+                  ...prevState,
+                  documents: prevState.documents.map((doc) => ({
+                    ...doc,
+                    copies: 1,
+                  })),
+                }));
+              }
+              create_mutation.mutate();
+              console.log(document_request);
+            }}
+          >
+            Submit
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

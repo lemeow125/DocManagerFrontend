@@ -107,8 +107,8 @@ export default function SubmitQuestionnairePage() {
     },
   });
   return (
-    <div className="flex h-screen w-full items-center justify-center p-4">
-      <Card className="w-[1366px] h-5/6 overflow-y-auto">
+    <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
+      <Card className="w-full">
         <CardHeader>
           <CardTitle>Submit Feedback</CardTitle>
           <CardDescription className="text-red-600">{error}</CardDescription>

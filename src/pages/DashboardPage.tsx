@@ -34,41 +34,39 @@ export default function DashboardPage() {
     );
   }
   return (
-    <div className="flex h-screen w-full items-center justify-center p-4">
-      <div className="flex flex-col items-center justify-center text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">Dashboard</h1>
-        <div className="flex flex-row gap-2">
-          <StatsWidget
-            title={"Documents"}
-            stats={[{ label: "Available", value: documents.data.length }]}
-          />
-          <StatsWidget
-            title="Document Requests"
-            stats={[
-              {
-                label: "Pending",
-                value: documents.data.filter(
-                  (document_requests: DocumentRequestType) =>
-                    document_requests.status === "pending"
-                ).length,
-              },
-              {
-                label: "Approved",
-                value: documents.data.filter(
-                  (document_requests: DocumentRequestType) =>
-                    document_requests.status === "approved"
-                ).length,
-              },
-              {
-                label: "Denied",
-                value: documents.data.filter(
-                  (document_requests: DocumentRequestType) =>
-                    document_requests.status === "denied"
-                ).length,
-              },
-            ]}
-          />
-        </div>
+    <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
+      <h1 className="text-4xl font-bold text-gray-900 mb-4">Dashboard</h1>
+      <div className="flex flex-row gap-2">
+        <StatsWidget
+          title={"Documents"}
+          stats={[{ label: "Available", value: documents.data.length }]}
+        />
+        <StatsWidget
+          title="Document Requests"
+          stats={[
+            {
+              label: "Pending",
+              value: documents.data.filter(
+                (document_requests: DocumentRequestType) =>
+                  document_requests.status === "pending"
+              ).length,
+            },
+            {
+              label: "Approved",
+              value: documents.data.filter(
+                (document_requests: DocumentRequestType) =>
+                  document_requests.status === "approved"
+              ).length,
+            },
+            {
+              label: "Denied",
+              value: documents.data.filter(
+                (document_requests: DocumentRequestType) =>
+                  document_requests.status === "denied"
+              ).length,
+            },
+          ]}
+        />
       </div>
     </div>
   );

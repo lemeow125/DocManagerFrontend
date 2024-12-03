@@ -71,87 +71,85 @@ export default function UploadDocumentPage() {
   });
 
   return (
-    <div className="flex h-screen w-full items-center justify-center p-4">
-      <div className="flex flex-col items-center justify-center text-center h-full">
-        <Card className="w-[1366px]">
-          <CardHeader>
-            <CardTitle>Upload document</CardTitle>
-            <CardDescription className="text-red-600">{error}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form>
-              <div className="grid w-full items-center gap-4">
+    <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
+      <Card className="w-full">
+        <CardHeader>
+          <CardTitle>Upload document</CardTitle>
+          <CardDescription className="text-red-600">{error}</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <form>
+            <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Document Name</Label>
+                <Input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDocument({
+                      ...document,
+                      name: e.target.value,
+                    });
+                  }}
+                  placeholder="Name of document"
+                />
+              </div>
+              <div className="flex flex-col space-y-1.5">
                 <div className="flex flex-col space-y-1.5">
-                  <Label htmlFor="name">Document Name</Label>
+                  <Label htmlFor="name">Number of Pages</Label>
                   <Input
+                    value={document.number_pages}
                     onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                      setDocument({
-                        ...document,
-                        name: e.target.value,
-                      });
+                      if (!isNaN(parseInt(e.target.value))) {
+                        console.log("test");
+                        setDocument({
+                          ...document,
+                          number_pages: Number(e.target.value),
+                        });
+                      }
                     }}
-                    placeholder="Name of document"
+                    placeholder="# of pages"
                   />
                 </div>
+                <Label htmlFor="framework">Type</Label>
+                <Select
+                  defaultValue={document.document_type}
+                  value={document.document_type}
+                  onValueChange={(value) =>
+                    setDocument({ ...document, document_type: value })
+                  }
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="hoa">HOA</SelectItem>
+                    <SelectItem value="memorandum">Memorandum</SelectItem>
+                    <SelectItem value="other">Other</SelectItem>
+                  </SelectContent>
+                </Select>
                 <div className="flex flex-col space-y-1.5">
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">Number of Pages</Label>
-                    <Input
-                      value={document.number_pages}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        if (!isNaN(parseInt(e.target.value))) {
-                          console.log("test");
-                          setDocument({
-                            ...document,
-                            number_pages: Number(e.target.value),
-                          });
-                        }
-                      }}
-                      placeholder="# of pages"
-                    />
-                  </div>
-                  <Label htmlFor="framework">Type</Label>
-                  <Select
-                    defaultValue={document.document_type}
-                    value={document.document_type}
-                    onValueChange={(value) =>
-                      setDocument({ ...document, document_type: value })
-                    }
-                  >
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select" />
-                    </SelectTrigger>
-                    <SelectContent position="popper">
-                      <SelectItem value="hoa">HOA</SelectItem>
-                      <SelectItem value="memorandum">Memorandum</SelectItem>
-                      <SelectItem value="other">Other</SelectItem>
-                    </SelectContent>
-                  </Select>
-                  <div className="flex flex-col space-y-1.5">
-                    <Label htmlFor="name">File</Label>
-                    <input
-                      id="file"
-                      type="file"
-                      multiple={false}
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                        if (e.target.files) {
-                          setDocument({ ...document, file: e.target.files[0] });
-                        }
-                      }}
-                    />
-                  </div>
+                  <Label htmlFor="name">File</Label>
+                  <input
+                    id="file"
+                    type="file"
+                    multiple={false}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      if (e.target.files) {
+                        setDocument({ ...document, file: e.target.files[0] });
+                      }
+                    }}
+                  />
                 </div>
               </div>
-            </form>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Button onClick={() => navigate("/dashboard")} variant="outline">
-              Cancel
-            </Button>
-            <Button onClick={() => create_mutation.mutate()}>Upload</Button>
-          </CardFooter>
-        </Card>
-      </div>
+            </div>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-between">
+          <Button onClick={() => navigate("/dashboard")} variant="outline">
+            Cancel
+          </Button>
+          <Button onClick={() => create_mutation.mutate()}>Upload</Button>
+        </CardFooter>
+      </Card>
     </div>
   );
 }

@@ -77,6 +77,9 @@ export type UserType = {
   last_name: string;
   full_name: string;
   role: "head" | "admin" | "client" | "planning" | "staff";
+  sex: string;
+  birthday: string;
+  age: string;
 };
 
 export type RegisterType = {
@@ -103,12 +106,6 @@ export type ResetPasswordConfirmType = {
   uid: string;
   token: string;
   new_password: string;
-};
-
-export type AddEquipmentType = {
-  name: string;
-  description: string;
-  category?: string;
 };
 
 export function RegisterAPI(info: RegisterType) {
