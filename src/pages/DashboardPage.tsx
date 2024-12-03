@@ -40,13 +40,19 @@ export default function DashboardPage() {
       <div className="flex flex-row gap-2">
         <StatsWidget
           title={"Documents Available by Type"}
-          stats={documents.data.map((outer_document: DocumentType) => {
+          stats={Array.from(
+            new Set(
+              documents.data.map(
+                (outer_document: DocumentType) => outer_document.document_type
+              )
+            )
+          ).map((document_type) => {
             return {
-              label: outer_document.document_type,
+              label: document_type as string,
               value: documents.data.filter(
                 (document: DocumentType) =>
-                  document.document_type === outer_document.document_type
-              ).length,
+                  document.document_type === document_type
+              ).length as number,
             };
           })}
         />
