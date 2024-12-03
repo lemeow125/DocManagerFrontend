@@ -2,6 +2,7 @@ import {
   DocumentRequestsAPI,
   DocumentRequestType,
   DocumentsAPI,
+  DocumentType,
 } from "@/components/API";
 import { useQuery } from "@tanstack/react-query";
 import ErrorPage from "./ErrorPage";
@@ -38,8 +39,16 @@ export default function DashboardPage() {
       <h1 className="text-4xl font-bold text-gray-900 mb-4">Dashboard</h1>
       <div className="flex flex-row gap-2">
         <StatsWidget
-          title={"Documents"}
-          stats={[{ label: "Available", value: documents.data.length }]}
+          title={"Documents Available by Type"}
+          stats={documents.data.map((outer_document: DocumentType) => {
+            return {
+              label: outer_document.document_type,
+              value: documents.data.filter(
+                (document: DocumentType) =>
+                  document.document_type === outer_document.document_type
+              ).length,
+            };
+          })}
         />
         <StatsWidget
           title="Document Requests"

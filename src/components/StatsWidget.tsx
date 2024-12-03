@@ -6,7 +6,7 @@ type props = {
 
 export default function StatsWidget(props: props) {
   return (
-    <div className="bg-white shadow-md rounded-lg p-6 w-80 h-64">
+    <div className="bg-white shadow-md rounded-lg p-6 w-80 h-64 overflow-y-scroll">
       <div className="mb-4">
         <h2 className="text-xl font-semibold">{props.title}</h2>
         {props.subtitle && (

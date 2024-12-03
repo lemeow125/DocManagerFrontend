@@ -8,13 +8,6 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -109,23 +102,18 @@ export default function UploadDocumentPage() {
                     placeholder="# of pages"
                   />
                 </div>
-                <Label htmlFor="framework">Type</Label>
-                <Select
-                  defaultValue={document.document_type}
-                  value={document.document_type}
-                  onValueChange={(value) =>
-                    setDocument({ ...document, document_type: value })
-                  }
-                >
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select" />
-                  </SelectTrigger>
-                  <SelectContent position="popper">
-                    <SelectItem value="hoa">HOA</SelectItem>
-                    <SelectItem value="memorandum">Memorandum</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
+                <div className="flex flex-col space-y-1.5">
+                  <Label htmlFor="name">Type</Label>
+                  <Input
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setDocument({
+                        ...document,
+                        document_type: e.target.value,
+                      });
+                    }}
+                    placeholder="Type of document"
+                  />
+                </div>
                 <div className="flex flex-col space-y-1.5">
                   <Label htmlFor="name">File</Label>
                   <input
