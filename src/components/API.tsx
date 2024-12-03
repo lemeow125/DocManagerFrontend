@@ -82,6 +82,9 @@ export type UserType = {
 export type RegisterType = {
   email: string;
   password: string;
+  confirm_password: string;
+  sex: string;
+  birthday: string | null;
   first_name: string;
   last_name: string;
 };

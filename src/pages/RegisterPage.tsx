@@ -1,4 +1,4 @@
-import { RegisterAPI } from "@/components/API";
+import { RegisterAPI, RegisterType } from "@/components/API";
 import { auth_toggle } from "@/components/plugins/redux/slices/AuthSlice";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,21 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { format } from "date-fns";
+import { cn } from "@/lib/utils";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { CalendarIcon } from "lucide-react";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router";
@@ -19,10 +34,12 @@ export default function RegisterPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [error, setError] = useState("");
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<RegisterType>({
     first_name: "",
     last_name: "",
     email: "",
+    sex: "",
+    birthday: "",
     password: "",
     confirm_password: "",
   });
@@ -62,6 +79,50 @@ export default function RegisterPage() {
                   }
                   id="username"
                 />
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="framework">Sex</Label>
+                <Select
+                  defaultValue={user.sex}
+                  value={user.sex}
+                  onValueChange={(value) => setUser({ ...user, sex: value })}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select" />
+                  </SelectTrigger>
+                  <SelectContent position="popper">
+                    <SelectItem value="male">Male</SelectItem>
+                    <SelectItem value="female">Female</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex flex-col space-y-1.5">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-[280px] justify-start text-left font-normal",
+                        !user.birthday && "text-muted-foreground"
+                      )}
+                    >
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {user.birthday ? (
+                        format(user.birthday, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <input
+                      type="date"
+                      onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+                        setUser({ ...user, birthday: e.target.value })
+                      }
+                    />
+                  </PopoverContent>
+                </Popover>
               </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Password</Label>
