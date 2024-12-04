@@ -228,6 +228,12 @@ export type DocumentCreateType = {
   number_pages: number;
 };
 
+export type DocumentUpdateType = {
+  name: string;
+  document_type: string;
+  number_pages: number;
+};
+
 export async function DocumentsAPI() {
   const config = await GetConfig();
   return instance
@@ -263,6 +269,37 @@ export async function DocumentCreateAPI(document: FormData) {
     })
     .catch((error) => {
       console.log("Error creating document");
+      console.log(error.response.data["detail"]);
+      return [false, error.response.data["detail"]];
+    });
+}
+
+export async function DocumentUpdateAPI(
+  id: number,
+  document: DocumentUpdateType
+) {
+  const config = await GetConfig();
+  return instance
+    .patch(`api/v1/documents/update/${id}/`, document, config)
+    .then((response) => {
+      return [true, response.data as DocumentUpdateType];
+    })
+    .catch((error) => {
+      console.log("Error updating document");
+      console.log(error.response.data);
+      return [false, error.response.data];
+    });
+}
+
+export async function DocumentDeleteAPI(id: number) {
+  const config = await GetConfig();
+  return instance
+    .delete(`api/v1/documents/delete/${id}/`, config)
+    .then((response) => {
+      return [true, response.data];
+    })
+    .catch((error) => {
+      console.log("Error deleting document");
       console.log(error.response.data["detail"]);
       return [false, error.response.data["detail"]];
     });

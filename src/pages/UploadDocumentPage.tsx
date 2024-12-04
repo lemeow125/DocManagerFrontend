@@ -40,6 +40,7 @@ export default function UploadDocumentPage() {
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["documents"] });
       queryClient.invalidateQueries({ queryKey: ["client_documents"] });
+      queryClient.invalidateQueries({ queryKey: ["staff_documents"] });
       setError("");
       toast(
         `Document uploaded successfuly,  ${

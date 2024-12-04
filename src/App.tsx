@@ -32,6 +32,7 @@ import ExportCRS03Page from "./pages/ExportCRS03Page";
 import ExportCRS01Page from "./pages/ExportCRS01Page";
 import Export0061Page from "./pages/Export0061Page";
 import PlanningOnlyPage from "./components/PlanningOnlyPage";
+import HeadDocumentsPage from "./pages/HeadDocumentsPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -129,6 +130,19 @@ const router = createHashRouter([
         <StaffOnlyPage>
           <StaffDocumentsPage />
         </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/documents/list/head/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <HeadOnlyPage>
+          <HeadDocumentsPage />
+        </HeadOnlyPage>
       </>
     ),
   },

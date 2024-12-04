@@ -158,25 +158,47 @@ export default function AppSidebar() {
               Staff Actions
             </p>
             {user.data.role == "head" ? (
-              <Button
-                onClick={() => navigate("/requests/list/head/")}
-                className="w-full"
-              >
-                <div className="flex flex-row items-center w-full gap-1">
-                  <BookIcon />
-                  <span>Document Requests (Head)</span>
-                </div>
-              </Button>
+              <>
+                <Button
+                  onClick={() => navigate("/documents/list/head/")}
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>Documents (Head)</span>
+                  </div>
+                </Button>
+                <Button
+                  onClick={() => navigate("/requests/list/head/")}
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>Document Requests (Head)</span>
+                  </div>
+                </Button>
+              </>
             ) : (
-              <Button
-                onClick={() => navigate("/requests/list/staff/")}
-                className="w-full"
-              >
-                <div className="flex flex-row items-center w-full gap-1">
-                  <BookIcon />
-                  <span>Document Requests (Staff)</span>
-                </div>
-              </Button>
+              <>
+                <Button
+                  onClick={() => navigate("/requests/list/staff/")}
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>Document Requests (Staff)</span>
+                  </div>
+                </Button>
+                <Button
+                  onClick={() => navigate("/documents/list/staff/")}
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>View Documents (Staff)</span>
+                  </div>
+                </Button>
+              </>
             )}
             <Button
               onClick={() => navigate("/documents/upload/")}
@@ -185,16 +207,6 @@ export default function AppSidebar() {
               <div className="flex flex-row items-center w-full gap-1">
                 <BookIcon />
                 <span>Upload Document (Staff)</span>
-              </div>
-            </Button>
-
-            <Button
-              onClick={() => navigate("/documents/list/staff/")}
-              className="w-full"
-            >
-              <div className="flex flex-row items-center w-full gap-1">
-                <BookIcon />
-                <span>View Documents (Staff)</span>
               </div>
             </Button>
             <Button
