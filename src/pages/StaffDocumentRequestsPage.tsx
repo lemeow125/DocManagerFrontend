@@ -226,25 +226,23 @@ export default function StaffDocumentRequestsPage() {
                   {document_request.date_requested}
                 </TableCell>
                 <TableCell className="text-right gap-y-4">
-                  {document_request.status == "pending" ? (
-                    <p>Request is Pending. Please wait for Finalization</p>
-                  ) : (
-                    <div className="flex-col">
-                      <Link
-                        to="/export/CRS01/"
-                        state={{ document_request: document_request }}
-                      >
-                        <Button>Export to CSR-01</Button>
-                      </Link>
-                      <Separator />
-                      <Link
-                        to="/export/CRS03/"
-                        state={{ document_request: document_request }}
-                      >
-                        <Button>Export to CSR-03</Button>
-                      </Link>
-                    </div>
-                  )}
+                  <div className="flex-col">
+                    <Link
+                      className=" w-full"
+                      to="/export/CRS01/"
+                      state={{ document_request: document_request }}
+                    >
+                      <Button className="w-full">Export to CSR-01</Button>
+                    </Link>
+                    <Separator />
+                    <Link
+                      className="w-full"
+                      to="/export/CRS03/"
+                      state={{ document_request: document_request }}
+                    >
+                      <Button className="w-full">Export to CSR-03</Button>
+                    </Link>
+                  </div>
                 </TableCell>
               </TableRow>
             ))}

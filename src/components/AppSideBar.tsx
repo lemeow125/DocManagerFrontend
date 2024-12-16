@@ -11,7 +11,13 @@ import { useSidebar } from "@/components/ui/sidebar";
 // import { useNavigate } from "react-router";
 import { Separator } from "./ui/separator";
 import { useQuery } from "@tanstack/react-query";
-import { setAccessToken, setRefreshToken, staff_roles, UserAPI } from "./API";
+import {
+  planning_roles,
+  setAccessToken,
+  setRefreshToken,
+  staff_roles,
+  UserAPI,
+} from "./API";
 import BookIcon from "./icons/bookicon";
 import DashboardIcon from "./icons/dashboardicon";
 import { Button } from "./ui/button";
@@ -209,13 +215,19 @@ export default function AppSidebar() {
                 <span>Upload Document (Staff)</span>
               </div>
             </Button>
+          </>
+        ) : (
+          <></>
+        )}
+        {user.data && planning_roles.includes(user.data.role) ? (
+          <>
             <Button
               onClick={() => navigate("/questionnaires/list/")}
               className="w-full"
             >
               <div className="flex flex-row items-center w-full gap-1">
                 <PostIcon />
-                <span>View Questionnaires (Staff)</span>
+                <span>View Questionnaires (Planning)</span>
               </div>
             </Button>
           </>

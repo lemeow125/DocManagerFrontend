@@ -57,7 +57,7 @@ export default function HeadDocumentRequestsPage() {
       });
       setError("");
       toast(
-        `Document uploaded successfuly,  ${
+        `Request updated   successfuly,  ${
           typeof data[1] == "object" ? "ID:" + data[1].id : ""
         }`,
         {
@@ -295,21 +295,40 @@ export default function HeadDocumentRequestsPage() {
                       >
                         Deny
                       </Button>
+                      <Separator />
+                      <Link
+                        className="w-full"
+                        to="/export/CRS01/"
+                        state={{ document_request: document_request }}
+                      >
+                        <Button className="w-full"> Export to CRS-01</Button>
+                      </Link>
+
+                      <Separator />
+                      <Link
+                        className="w-full"
+                        to="/export/CRS03/"
+                        state={{ document_request: document_request }}
+                      >
+                        <Button className="w-full">Export to CSR-03</Button>
+                      </Link>
                     </div>
                   ) : (
                     <div className="flex-col space-y-5">
                       <Link
+                        className="w-full"
                         to="/export/CRS01/"
                         state={{ document_request: document_request }}
                       >
-                        <Button>Export to CSR-01</Button>
+                        <Button className="w-full">Export to CSR-01</Button>
                       </Link>
                       <Separator />
                       <Link
+                        className="w-full"
                         to="/export/CRS03/"
                         state={{ document_request: document_request }}
                       >
-                        <Button>Export to CSR-03</Button>
+                        <Button className="w-full">Export to CSR-03</Button>
                       </Link>
                     </div>
                   )}

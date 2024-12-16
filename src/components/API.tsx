@@ -66,8 +66,8 @@ export function ParseError(error: { response: { data: string } }) {
 }
 
 // User
-export const staff_roles = ["head", "admin", "planning", "staff"];
-export const planning_roles = ["head", "admin", "planning"]; // Don't include staff
+export const staff_roles = ["head", "admin", "staff"];
+export const planning_roles = ["planning"]; // Don't include staff or head
 
 export type UserType = {
   id: number;
@@ -92,6 +92,13 @@ export type RegisterType = {
   last_name: string;
 };
 
+export type UpdateType = {
+  sex: string;
+  birthday: string | null;
+  first_name: string;
+  last_name: string;
+};
+
 export type LoginType = {
   email: string;
   password: string;
@@ -100,6 +107,11 @@ export type LoginType = {
 export type ActivationType = {
   uid: string;
   token: string;
+};
+
+export type PasswordUpdateType = {
+  new_password: string;
+  current_password: string;
 };
 
 export type ResetPasswordConfirmType = {
@@ -168,6 +180,32 @@ export async function UserAPI() {
     .catch((error) => {
       console.log(error.message);
       return error;
+    });
+}
+
+export async function UserUpdatePasswordAPI(password: PasswordUpdateType) {
+  const config = await GetConfig();
+  return instance
+    .post("/api/v1/accounts/users/set_password/", password, config)
+    .then((response) => {
+      return [true, response.data];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return [false, error];
+    });
+}
+
+export async function UserUpdateAPI(user: UpdateType) {
+  const config = await GetConfig();
+  return instance
+    .patch("api/v1/accounts/users/me/", user, config)
+    .then((response) => {
+      return [true, response.data as UserType];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return [false, error];
     });
 }
 
