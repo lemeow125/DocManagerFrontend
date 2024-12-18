@@ -27,12 +27,12 @@ import ResetPasswordConfirmPage from "./pages/ResetPasswordConfirmPage";
 import CreateDocumentRequestPage from "./pages/CreateDocumentRequestPage";
 import SubmitQuestionnairePage from "./pages/SubmitQuestionnairePage";
 import StaffDocumentRequestsPage from "./pages/StaffDocumentRequestsPage";
-import StaffQuestionnairesPage from "./pages/StaffQuestionnairesPage";
 import ExportCRS03Page from "./pages/ExportCRS03Page";
 import ExportCRS01Page from "./pages/ExportCRS01Page";
 import Export0061Page from "./pages/Export0061Page";
 import PlanningOnlyPage from "./components/PlanningOnlyPage";
 import HeadDocumentsPage from "./pages/HeadDocumentsPage";
+import PlanningQuestionnairesPage from "./pages/PlanningQuestionnairesPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -215,7 +215,7 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <PlanningOnlyPage>
-          <StaffQuestionnairesPage />
+          <PlanningQuestionnairesPage />
         </PlanningOnlyPage>
       </>
     ),
@@ -253,9 +253,9 @@ const router = createHashRouter([
         <Header />
         <AppSidebar />
         <Revalidator />
-        <StaffOnlyPage>
+        <PlanningOnlyPage>
           <Export0061Page />
-        </StaffOnlyPage>
+        </PlanningOnlyPage>
       </>
     ),
   },
