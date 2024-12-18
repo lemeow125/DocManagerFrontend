@@ -197,7 +197,7 @@ const router = createHashRouter([
     ),
   },
   {
-    path: "/questionnaires/create/",
+    path: "/questionnaires/create/:document_request_id?",
     element: (
       <>
         <Header />

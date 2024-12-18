@@ -27,7 +27,9 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 export default function ClientDocumentRequestsPage() {
+  const navigate = useNavigate();
   const [search_term, setSearchTerm] = useState("");
   const document_requests = useQuery({
     queryKey: ["client_document_requests"],
@@ -117,21 +119,29 @@ export default function ClientDocumentRequestsPage() {
                     <DialogTitle hidden={true}>View</DialogTitle>
                     <DialogTrigger asChild>
                       <Button
-                        onClick={() =>
-                          toast(
-                            "Enjoying DDMS? We'd love to hear your feedback, take the survey!",
-                            {
-                              position: "top-right",
-                              autoClose: 2000,
-                              hideProgressBar: false,
-                              closeOnClick: true,
-                              pauseOnHover: true,
-                              draggable: true,
-                              progress: undefined,
-                              theme: "light",
-                            }
-                          )
-                        }
+                        onClick={() => {
+                          if (
+                            !document_request.questionnaire &&
+                            document_request.status == "approved"
+                          ) {
+                            toast(
+                              "Please take the survey to view your documents",
+                              {
+                                position: "top-right",
+                                autoClose: 2000,
+                                hideProgressBar: false,
+                                closeOnClick: true,
+                                pauseOnHover: true,
+                                draggable: true,
+                                progress: undefined,
+                                theme: "light",
+                              }
+                            );
+                            navigate(
+                              `/questionnaires/create/${document_request.id}`
+                            );
+                          }
+                        }}
                         variant="outline"
                       >
                         View

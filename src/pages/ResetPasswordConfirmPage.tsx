@@ -26,7 +26,7 @@ export default function ResetPasswordConfirmPage() {
   });
   return (
     <div className="flex h-screen w-full items-center justify-center p-4">
-      <Card className="w-[350px]">
+      <Card className="w-[420px]">
         <CardHeader>
           <CardTitle>Reset Password</CardTitle>
           <CardDescription className="text-red-600">{error}</CardDescription>

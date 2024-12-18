@@ -21,7 +21,7 @@ export default function ResetPasswordPage() {
   const [email, setEmail] = useState("");
   return (
     <div className="flex h-screen w-full items-center justify-center p-4">
-      <Card className="w-[350px]">
+      <Card className="w-[420px]">
         <CardHeader>
           <CardTitle>Recover your Account</CardTitle>
           <CardDescription>

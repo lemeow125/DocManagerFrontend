@@ -354,6 +354,7 @@ export type DocumentRequestUnitType = {
 export type DocumentRequestType = {
   id: number;
   requester: string;
+  questionnaire: number;
   college: string;
   status: "pending" | "approved" | "denied";
   type: "softcopy" | "hardcopy";
@@ -438,6 +439,7 @@ export async function DocumentRequestUpdateAPI(
 // Questionnaires
 
 export type QuestionnaireCreateType = {
+  document_request: string | null;
   client_type: string;
   sex: string;
   age: number;

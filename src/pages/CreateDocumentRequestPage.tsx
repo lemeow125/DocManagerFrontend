@@ -115,7 +115,7 @@ export default function CreateDocumentRequestPage() {
 
   return (
     <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
-      <Card className="w-full">
+      <Card className="w-full h-full overflow-y-scroll">
         <CardHeader>
           <CardTitle>Create Request</CardTitle>
           <CardDescription className="text-red-600">{error}</CardDescription>

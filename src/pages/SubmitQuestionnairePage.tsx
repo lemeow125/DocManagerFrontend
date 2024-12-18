@@ -19,14 +19,16 @@ import {
 } from "@/components/ui/select";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { toast } from "react-toastify";
 
 export default function SubmitQuestionnairePage() {
+  const { document_request_id } = useParams();
   const navigate = useNavigate();
   const [error, setError] = useState("");
   const queryClient = useQueryClient();
   const [questionnaire, setQuestionnaire] = useState({
+    document_request: document_request_id || null,
     client_type: "",
     sex: "",
     age: 18,
@@ -108,7 +110,7 @@ export default function SubmitQuestionnairePage() {
   });
   return (
     <div className="flex flex-col h-screen w-full overflow-y-scroll justify-center items-center p-4 bg-white mt-8">
-      <Card className="w-full">
+      <Card className="w-full h-full overflow-y-scroll">
         <CardHeader>
           <CardTitle>Submit Feedback</CardTitle>
           <CardDescription className="text-red-600">{error}</CardDescription>
