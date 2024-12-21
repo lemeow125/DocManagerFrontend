@@ -47,30 +47,15 @@ const router = createHashRouter([
   },
   {
     path: "/register/",
-    element: (
-      <>
-        <Revalidator />
-        <RegisterPage />
-      </>
-    ),
+    element: <RegisterPage />,
   },
   {
     path: "/reset_password/",
-    element: (
-      <>
-        <Revalidator />
-        <ResetPasswordPage />
-      </>
-    ),
+    element: <ResetPasswordPage />,
   },
   {
     path: "/reset_password/confirm/:uid/:token/",
-    element: (
-      <>
-        <Revalidator />
-        <ResetPasswordConfirmPage />
-      </>
-    ),
+    element: <ResetPasswordConfirmPage />,
   },
   {
     path: "/activation/:uid/:token/",

@@ -14,26 +14,18 @@ export default function Revalidator() {
   const [rechecked, setRechecked] = useState(false);
 
   useEffect(() => {
-    const public_routes = [
-      "/",
-      "/register/",
-      "reset_password/",
-      "/reset_password/confirm/",
-    ];
     if (!authenticated && rechecked) {
-      if (!public_routes.indexOf(location.pathname)) {
-        navigate("/");
-        toast("Please log in to continue", {
-          position: "bottom-center",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
+      navigate("/");
+      toast("Please log in to continue", {
+        position: "bottom-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
     }
   }, [authenticated, location.pathname, navigate, rechecked]);
 
