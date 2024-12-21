@@ -23,7 +23,7 @@ export default function LoginPage() {
   const [user, setUser] = useState({
     email: "",
     password: "",
-    remember: false,
+    remember: true,
   });
   return (
     <div className="flex h-screen w-full items-center justify-center p-4">
