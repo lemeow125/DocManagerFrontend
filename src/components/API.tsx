@@ -379,10 +379,23 @@ export type DocumentRequestCreateType = {
   documents: DocumentRequestUnitCreateType[];
 };
 
-export async function StaffDocumentRequestsAPI() {
+export async function HeadDocumentRequestsAPI() {
   const config = await GetConfig();
   return instance
     .get("api/v1/requests/list/head/", config)
+    .then((response) => {
+      return response.data as DocumentRequestType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
+export async function StaffDocumentRequestsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/requests/list/", config)
     .then((response) => {
       return response.data as DocumentRequestType[];
     })

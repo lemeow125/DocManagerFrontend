@@ -1,5 +1,5 @@
 import {
-  StaffDocumentRequestsAPI,
+  HeadDocumentRequestsAPI,
   DocumentRequestType,
   DocumentRequestUnitType,
   DocumentRequestUpdateAPI,
@@ -79,8 +79,8 @@ export default function HeadDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
   const [view_pending_only, setViewPendingOnly] = useState(false);
   const document_requests = useQuery({
-    queryKey: ["staff_document_requests"],
-    queryFn: StaffDocumentRequestsAPI,
+    queryKey: ["head_document_requests"],
+    queryFn: HeadDocumentRequestsAPI,
   });
   if (document_requests.isLoading || !document_requests.data) {
     return <LoadingPage />;
@@ -189,20 +189,8 @@ export default function HeadDocumentRequestsPage() {
                               File Name
                             </TableHead>
                             <TableHead className="text-left">Type</TableHead>
-                            <TableHead
-                              className={
-                                document_request.status == "approved"
-                                  ? "text-left"
-                                  : "text-right"
-                              }
-                            >
-                              Copies
-                            </TableHead>
-                            {document_request.status == "approved" ? (
-                              <TableHead className="text-right">Link</TableHead>
-                            ) : (
-                              <></>
-                            )}
+                            <TableHead className="text-left">Copies</TableHead>
+                            <TableHead className="text-right">Link</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody className="overflow-y-scroll h-10">
@@ -229,30 +217,18 @@ export default function HeadDocumentRequestsPage() {
                                 >
                                   {document_request_unit.copies}
                                 </TableCell>
-                                {document_request.status == "approved" ? (
-                                  <TableCell className="text-right font-medium">
-                                    <a
-                                      href={document_request_unit.document.file}
-                                    >
-                                      Preview
-                                    </a>
-                                  </TableCell>
-                                ) : (
-                                  <></>
-                                )}
+                                <TableCell className="text-right font-medium">
+                                  <a href={document_request_unit.document.file}>
+                                    Preview
+                                  </a>
+                                </TableCell>
                               </TableRow>
                             )
                           )}
                         </TableBody>
                         <TableFooter>
                           <TableRow>
-                            <TableCell
-                              colSpan={
-                                document_request.status == "approved" ? 4 : 3
-                              }
-                            >
-                              Total
-                            </TableCell>
+                            <TableCell colSpan={4}>Total</TableCell>
                             <TableCell className="text-right">
                               {document_request.documents
                                 ? document_request.documents.length
