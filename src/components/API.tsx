@@ -308,8 +308,10 @@ export async function DocumentCreateAPI(document: FormData) {
     })
     .catch((error) => {
       console.log("Error creating document");
-      console.log(error.response.data["detail"]);
-      return [false, error.response.data["detail"]];
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 
@@ -339,8 +341,10 @@ export async function DocumentDeleteAPI(id: number) {
     })
     .catch((error) => {
       console.log("Error deleting document");
-      console.log(error.response.data["detail"]);
-      return [false, error.response.data["detail"]];
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 
@@ -432,7 +436,10 @@ export async function DocumentRequestCreateAPI(
     })
     .catch((error) => {
       console.log("Error creating document");
-      return [false, error.response.data["detail"]];
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 
@@ -448,7 +455,10 @@ export async function DocumentRequestUpdateAPI(
     })
     .catch((error) => {
       console.log("Error creating document");
-      return [false, error.response.data["error"]];
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 
@@ -515,7 +525,10 @@ export async function QuestionnaireSubmitAPI(
     })
     .catch((error) => {
       console.log("Error submitting questionnaire");
-      return [false, error.response.data["detail"]];
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 
@@ -529,5 +542,78 @@ export async function QuestionnairesAPI() {
     .catch((error) => {
       console.log(error.message);
       return error;
+    });
+}
+
+// Authorization Requests
+
+export type AuthorizationRequestType = {
+  id: number;
+  requester: string;
+  college: string;
+  status: "pending" | "approved" | "denied";
+  remarks: string;
+  purpose: string;
+  documents: string;
+  date_requested: string;
+};
+
+export type AuthorizationRequestUpdateType = {
+  status: string;
+  remarks: string;
+};
+
+export type AuthorizationRequestCreateType = {
+  college: string;
+  purpose: string;
+  documents: string;
+};
+
+export async function AuthorizationRequestsAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/authorization_requests/list/", config)
+    .then((response) => {
+      return response.data as AuthorizationRequestType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
+export async function AuthorizationRequestCreateAPI(
+  document_request: AuthorizationRequestCreateType
+) {
+  const config = await GetConfig();
+  return instance
+    .post("api/v1/authorization_requests/create/", document_request, config)
+    .then((response) => {
+      return [true, response.data as AuthorizationRequestType];
+    })
+    .catch((error) => {
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
+    });
+}
+
+export async function AuthorizationRequestUpdateAPI(
+  document_request: AuthorizationRequestUpdateType,
+  id: number
+) {
+  const config = await GetConfig();
+  return instance
+    .patch(
+      `api/v1/authorization_requests/update/${id}/`,
+      document_request,
+      config
+    )
+    .then((response) => {
+      return [true, response.data as AuthorizationRequestType];
+    })
+    .catch((error) => {
+      return [false, error.response.data["error"]];
     });
 }

@@ -33,6 +33,9 @@ import Export0061Page from "./pages/Export0061Page";
 import PlanningOnlyPage from "./components/PlanningOnlyPage";
 import HeadDocumentsPage from "./pages/HeadDocumentsPage";
 import PlanningQuestionnairesPage from "./pages/PlanningQuestionnairesPage";
+import CreateAuthorizationRequestPage from "./pages/CreateAuthorizationRequestPage";
+import HeadAuthorizationRequestsPage from "./pages/HeadAuthorizationRequestsPage";
+import StaffAuthorizationRequestsPage from "./pages/StaffAuthorizationRequestsPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -91,6 +94,17 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <CreateDocumentRequestPage />
+      </>
+    ),
+  },
+  {
+    path: "/authorization_requests/create/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <CreateAuthorizationRequestPage />
       </>
     ),
   },
@@ -156,6 +170,19 @@ const router = createHashRouter([
     ),
   },
   {
+    path: "/authorization_requests/list/staff/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <StaffOnlyPage>
+          <StaffAuthorizationRequestsPage />
+        </StaffOnlyPage>
+      </>
+    ),
+  },
+  {
     path: "/requests/list/head/",
     element: (
       <>
@@ -168,6 +195,20 @@ const router = createHashRouter([
       </>
     ),
   },
+  {
+    path: "/authorization_requests/list/head/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <HeadOnlyPage>
+          <HeadAuthorizationRequestsPage />
+        </HeadOnlyPage>
+      </>
+    ),
+  },
+
   {
     path: "/documents/upload",
     element: (

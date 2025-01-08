@@ -146,6 +146,15 @@ export default function AppSidebar() {
               </div>
             </Button>
             <Button
+              onClick={() => navigate("/authorization_requests/create")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>New Authorization Request</span>
+              </div>
+            </Button>
+            <Button
               onClick={() => navigate("/questionnaires/create/")}
               className="w-full"
             >
@@ -183,6 +192,15 @@ export default function AppSidebar() {
                     <span>Document Requests (Head)</span>
                   </div>
                 </Button>
+                <Button
+                  onClick={() => navigate("/authorization_requests/list/head/")}
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>Authorization Requests (Head)</span>
+                  </div>
+                </Button>
               </>
             ) : (
               <>
@@ -193,6 +211,17 @@ export default function AppSidebar() {
                   <div className="flex flex-row items-center w-full gap-1">
                     <BookIcon />
                     <span>Document Requests (Staff)</span>
+                  </div>
+                </Button>
+                <Button
+                  onClick={() =>
+                    navigate("/authorization_requests/list/staff/")
+                  }
+                  className="w-full"
+                >
+                  <div className="flex flex-row items-center w-full gap-1">
+                    <BookIcon />
+                    <span>Authorization Requests (Staff)</span>
                   </div>
                 </Button>
                 <Button

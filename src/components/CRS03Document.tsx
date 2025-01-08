@@ -1,5 +1,5 @@
 import { Page, Text, Document, StyleSheet, Image } from "@react-pdf/renderer";
-import { DocumentRequestType, DocumentRequestUnitType } from "./API";
+import { AuthorizationRequestType } from "./API";
 import CRS03Image from "/FM-USTP-CRS-03.png";
 
 const styles = StyleSheet.create({
@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
 });
 
 type props = {
-  document_request: DocumentRequestType;
+  authorization_request: AuthorizationRequestType;
 };
 
 export default function CRS03Document(props: props) {
@@ -32,7 +32,7 @@ export default function CRS03Document(props: props) {
             fontSize: 12,
           }}
         >
-          {props.document_request.date_requested}
+          {props.authorization_request.date_requested}
         </Text>
         <Text
           style={{
@@ -44,7 +44,7 @@ export default function CRS03Document(props: props) {
             fontSize: 12,
           }}
         >
-          {props.document_request.requester}
+          {props.authorization_request.requester}
         </Text>
         <Text
           style={{
@@ -56,7 +56,7 @@ export default function CRS03Document(props: props) {
             fontSize: 12,
           }}
         >
-          {props.document_request.college}
+          {props.authorization_request.college}
         </Text>
         <Text
           style={{
@@ -68,14 +68,15 @@ export default function CRS03Document(props: props) {
             fontSize: 12,
           }}
         >
-          {props.document_request.purpose}
+          {props.authorization_request.purpose}
         </Text>
 
-        {props.document_request.documents
+        {props.authorization_request.documents
+          .split(",")
           .slice(0, 20)
-          .map((document_request_unit: DocumentRequestUnitType, index) => (
+          .map((document, index) => (
             <Text
-              key={document_request_unit.id}
+              key={document}
               style={{
                 width: "768px",
                 position: "absolute",
@@ -85,14 +86,15 @@ export default function CRS03Document(props: props) {
                 fontSize: 6,
               }}
             >
-              {document_request_unit.document.name}
+              {document}
             </Text>
           ))}
-        {props.document_request.documents
+        {props.authorization_request.documents
+          .split(",")
           .slice(0, 20)
-          .map((document_request_unit: DocumentRequestUnitType, index) => (
+          .map((document, index) => (
             <Text
-              key={document_request_unit.id}
+              key={document}
               style={{
                 width: "768px",
                 position: "absolute",
@@ -102,14 +104,15 @@ export default function CRS03Document(props: props) {
                 fontSize: 12,
               }}
             >
-              {document_request_unit.document.number_pages}
+              1
             </Text>
           ))}
-        {props.document_request.documents
+        {props.authorization_request.documents
+          .split(",")
           .slice(0, 20)
-          .map((document_request_unit: DocumentRequestUnitType, index) => (
+          .map((document, index) => (
             <Text
-              key={document_request_unit.id}
+              key={document}
               style={{
                 width: "768px",
                 position: "absolute",
@@ -119,7 +122,7 @@ export default function CRS03Document(props: props) {
                 fontSize: 12,
               }}
             >
-              {document_request_unit.copies}
+              1
             </Text>
           ))}
         <Text
@@ -144,7 +147,7 @@ export default function CRS03Document(props: props) {
             fontSize: 12,
           }}
         >
-          {props.document_request.requester}
+          {props.authorization_request.requester}
         </Text>
         <Image
           style={{ position: "absolute", zIndex: -1, top: 0, width: "100%" }}
