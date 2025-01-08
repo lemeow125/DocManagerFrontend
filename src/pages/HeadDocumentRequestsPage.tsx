@@ -59,6 +59,9 @@ export default function HeadDocumentRequestsPage() {
       queryClient.invalidateQueries({
         queryKey: ["staff_document_requests"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["head_document_requests"],
+      });
       setError("");
       toast(
         `Request updated   successfuly,  ${
