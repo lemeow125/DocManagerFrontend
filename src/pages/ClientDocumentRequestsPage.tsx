@@ -79,9 +79,8 @@ export default function ClientDocumentRequestsPage() {
             .filter(
               (document_request: DocumentRequestType) =>
                 search_term.includes(String(document_request.id)) ||
-                document_request.remarks
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document_request.remarks ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document_request.requester
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
@@ -255,9 +254,8 @@ export default function ClientDocumentRequestsPage() {
                 ? document_requests.data.filter(
                     (document_request: DocumentRequestType) =>
                       search_term.includes(String(document_request.id)) ||
-                      document_request.remarks
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
+                      document_request.remarks ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
                       document_request.requester
                         .toLowerCase()
                         .includes(search_term.toLowerCase()) ||

@@ -148,9 +148,8 @@ export default function HeadDocumentRequestsPage() {
             .filter(
               (document_request: DocumentRequestType) =>
                 search_term.includes(String(document_request.id)) ||
-                document_request.remarks
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document_request.remarks ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document_request.requester
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
@@ -343,15 +342,6 @@ export default function HeadDocumentRequestsPage() {
                       >
                         <Button className="w-full"> Export to CRS-01</Button>
                       </Link>
-
-                      <Separator />
-                      <Link
-                        className="w-full"
-                        to="/export/CRS03/"
-                        state={{ document_request: document_request }}
-                      >
-                        <Button className="w-full">Export to CSR-03</Button>
-                      </Link>
                     </div>
                   ) : (
                     <div className="flex-col space-y-5">
@@ -361,14 +351,6 @@ export default function HeadDocumentRequestsPage() {
                         state={{ document_request: document_request }}
                       >
                         <Button className="w-full">Export to CSR-01</Button>
-                      </Link>
-                      <Separator />
-                      <Link
-                        className="w-full"
-                        to="/export/CRS03/"
-                        state={{ document_request: document_request }}
-                      >
-                        <Button className="w-full">Export to CSR-03</Button>
                       </Link>
                     </div>
                   )}
@@ -385,9 +367,8 @@ export default function HeadDocumentRequestsPage() {
                     .filter(
                       (document_request: DocumentRequestType) =>
                         search_term.includes(String(document_request.id)) ||
-                        document_request.remarks
-                          .toLowerCase()
-                          .includes(search_term.toLowerCase()) ||
+                        document_request.remarks ||
+                        "".toLowerCase().includes(search_term.toLowerCase()) ||
                         document_request.requester
                           .toLowerCase()
                           .includes(search_term.toLowerCase()) ||

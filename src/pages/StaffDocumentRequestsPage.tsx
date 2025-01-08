@@ -28,7 +28,6 @@ import {
   DialogContent,
 } from "@/components/ui/dialog";
 import { Link } from "react-router";
-import { Separator } from "@/components/ui/separator";
 
 export default function StaffDocumentRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
@@ -90,9 +89,8 @@ export default function StaffDocumentRequestsPage() {
             .filter(
               (document_request: DocumentRequestType) =>
                 search_term.includes(String(document_request.id)) ||
-                document_request.remarks
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document_request.remarks ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document_request.requester
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
@@ -240,14 +238,6 @@ export default function StaffDocumentRequestsPage() {
                     >
                       <Button className="w-full">Export to CSR-01</Button>
                     </Link>
-                    <Separator />
-                    <Link
-                      className="w-full"
-                      to="/export/CRS03/"
-                      state={{ document_request: document_request }}
-                    >
-                      <Button className="w-full">Export to CSR-03</Button>
-                    </Link>
                   </div>
                 </TableCell>
               </TableRow>
@@ -262,9 +252,8 @@ export default function StaffDocumentRequestsPage() {
                     .filter(
                       (document_request: DocumentRequestType) =>
                         search_term.includes(String(document_request.id)) ||
-                        document_request.remarks
-                          .toLowerCase()
-                          .includes(search_term.toLowerCase()) ||
+                        document_request.remarks ||
+                        "".toLowerCase().includes(search_term.toLowerCase()) ||
                         document_request.requester
                           .toLowerCase()
                           .includes(search_term.toLowerCase()) ||
