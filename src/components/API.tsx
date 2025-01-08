@@ -253,6 +253,7 @@ export type DocumentType = {
   id: number;
   name: string;
   document_type: string;
+  sent_from: string;
   number_pages: number;
   file?: string;
   ocr_metadata: string;
@@ -358,6 +359,7 @@ export type DocumentRequestType = {
   college: string;
   status: "pending" | "approved" | "denied";
   type: "softcopy" | "hardcopy";
+  remarks: string;
   purpose: string;
   documents: DocumentRequestUnitType[];
   date_requested: string;
@@ -365,6 +367,7 @@ export type DocumentRequestType = {
 
 export type DocumentRequestUpdateType = {
   status: string;
+  remarks: string;
 };
 
 export type DocumentRequestUnitCreateType = {

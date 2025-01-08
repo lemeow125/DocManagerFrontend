@@ -158,6 +158,7 @@ export default function HeadDocumentsPage() {
             <TableHead>Type</TableHead>
             <TableHead>Actions</TableHead>
             <TableHead>Link</TableHead>
+            <TableHead>Sent From</TableHead>
             <TableHead className="text-right">Date Uploaded</TableHead>
           </TableRow>
         </TableHeader>
@@ -190,7 +191,7 @@ export default function HeadDocumentsPage() {
                   {document.document_type}
                 </TableCell>
                 <TableCell className="text-left">
-                  <div className="flex-col space-x-5">
+                  <div className="flex-col">
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
@@ -289,6 +290,9 @@ export default function HeadDocumentsPage() {
                   )}
                 </TableCell>
                 <TableCell className="text-right">
+                  {document.sent_from}
+                </TableCell>
+                <TableCell className="text-right">
                   {document.date_uploaded}
                 </TableCell>
               </TableRow>
@@ -296,7 +300,7 @@ export default function HeadDocumentsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={5}>Total</TableCell>
+            <TableCell colSpan={6}>Total</TableCell>
             <TableCell className="text-right">
               {documents.data
                 ? documents.data.filter(

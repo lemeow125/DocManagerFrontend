@@ -26,7 +26,11 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { toast } from "react-toastify";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -82,6 +86,11 @@ export default function HeadDocumentRequestsPage() {
     queryKey: ["head_document_requests"],
     queryFn: HeadDocumentRequestsAPI,
   });
+  const [selected_document_request, setSelectedDocumentRequest] =
+    useState<DocumentRequestUpdateType>({
+      status: "denied",
+      remarks: "",
+    });
   if (document_requests.isLoading || !document_requests.data) {
     return <LoadingPage />;
   }
@@ -126,6 +135,7 @@ export default function HeadDocumentRequestsPage() {
             <TableHead>Status</TableHead>
             <TableHead>Documents Requested</TableHead>
             <TableHead>Type</TableHead>
+            <TableHead>Remarks</TableHead>
             <TableHead>Date Requested</TableHead>
             <TableHead className="text-right">Action</TableHead>
           </TableRow>
@@ -244,6 +254,9 @@ export default function HeadDocumentRequestsPage() {
                   {document_request.type}
                 </TableCell>
                 <TableCell className="text-left">
+                  {document_request.remarks}
+                </TableCell>
+                <TableCell className="text-left">
                   {document_request.date_requested}
                 </TableCell>
                 <TableCell className="text-right">
@@ -252,7 +265,10 @@ export default function HeadDocumentRequestsPage() {
                       <Button
                         onClick={() =>
                           update_mutation.mutate({
-                            document_request: { status: "approved" },
+                            document_request: {
+                              status: "approved",
+                              remarks: "N/A",
+                            },
                             id: document_request.id,
                           })
                         }
@@ -260,17 +276,59 @@ export default function HeadDocumentRequestsPage() {
                       >
                         Approve
                       </Button>
-                      <Button
-                        onClick={() =>
-                          update_mutation.mutate({
-                            document_request: { status: "denied" },
-                            id: document_request.id,
-                          })
-                        }
-                        className="w-full"
-                      >
-                        Deny
-                      </Button>
+                      <Dialog>
+                        <DialogTrigger asChild className="w-full">
+                          <Button
+                            onClick={() =>
+                              setSelectedDocumentRequest({
+                                status: "denied",
+                                remarks: "",
+                              })
+                            }
+                          >
+                            Deny
+                          </Button>
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px]">
+                          <DialogHeader>
+                            <DialogTitle>Deny Request</DialogTitle>
+                            <DialogDescription>
+                              Provide remarks as to why the request has been
+                              denied. Click save when you're done.
+                            </DialogDescription>
+                          </DialogHeader>
+                          <div className="flex flex-col space-y-1.5">
+                            <Label htmlFor="name">Remarks</Label>
+                            <Input
+                              value={selected_document_request.remarks}
+                              onChange={(
+                                e: React.ChangeEvent<HTMLInputElement>
+                              ) => {
+                                setSelectedDocumentRequest({
+                                  ...selected_document_request,
+                                  remarks: e.target.value,
+                                });
+                              }}
+                              placeholder={"Provide a reason here"}
+                            />
+                          </div>
+                          <DialogFooter>
+                            <DialogClose asChild>
+                              <Button
+                                onClick={() =>
+                                  update_mutation.mutate({
+                                    document_request: selected_document_request,
+                                    id: document_request.id,
+                                  })
+                                }
+                                type="submit"
+                              >
+                                Deny
+                              </Button>
+                            </DialogClose>
+                          </DialogFooter>
+                        </DialogContent>
+                      </Dialog>
                       <Separator />
                       <Link
                         className="w-full"
@@ -314,7 +372,7 @@ export default function HeadDocumentRequestsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={8}>Total</TableCell>
+            <TableCell colSpan={9}>Total</TableCell>
             <TableCell className="text-right">
               {document_requests.data
                 ? document_requests.data

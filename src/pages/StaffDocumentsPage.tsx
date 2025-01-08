@@ -54,6 +54,7 @@ export default function StaffDocumentsPage() {
             <TableHead>File Name</TableHead>
             <TableHead>Type</TableHead>
             <TableHead>Link</TableHead>
+            <TableHead>Sent From</TableHead>
             <TableHead className="text-right">Date Uploaded</TableHead>
           </TableRow>
         </TableHeader>
@@ -93,6 +94,9 @@ export default function StaffDocumentsPage() {
                   )}
                 </TableCell>
                 <TableCell className="text-right">
+                  {document.sent_from}
+                </TableCell>
+                <TableCell className="text-right">
                   {document.date_uploaded}
                 </TableCell>
               </TableRow>
@@ -100,7 +104,7 @@ export default function StaffDocumentsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={4}>Total</TableCell>
+            <TableCell colSpan={5}>Total</TableCell>
             <TableCell className="text-right">
               {documents.data
                 ? documents.data.filter(

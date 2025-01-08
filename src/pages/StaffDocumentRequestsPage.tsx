@@ -80,7 +80,7 @@ export default function StaffDocumentRequestsPage() {
             <TableHead>Status</TableHead>
             <TableHead>Documents Requested</TableHead>
             <TableHead>Type</TableHead>
-
+            <TableHead>Remarks</TableHead>
             <TableHead>Date Requested</TableHead>
             <TableHead className="text-right">Actions</TableHead>
           </TableRow>
@@ -223,6 +223,9 @@ export default function StaffDocumentRequestsPage() {
                   {document_request.type}
                 </TableCell>
                 <TableCell className="text-left">
+                  {document_request.remarks}
+                </TableCell>
+                <TableCell className="text-left">
                   {document_request.date_requested}
                 </TableCell>
                 <TableCell className="text-right gap-y-4">
@@ -249,7 +252,7 @@ export default function StaffDocumentRequestsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={8}>Total</TableCell>
+            <TableCell colSpan={9}>Total</TableCell>
             <TableCell className="text-right">
               {document_requests.data
                 ? document_requests.data

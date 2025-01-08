@@ -69,6 +69,7 @@ export default function ClientDocumentRequestsPage() {
             <TableHead>Purpose</TableHead>
             <TableHead>Status</TableHead>
             <TableHead>Documents Requested</TableHead>
+            <TableHead>Remarks</TableHead>
             <TableHead>Type</TableHead>
             <TableHead className="text-right">Date Requested</TableHead>
           </TableRow>
@@ -234,6 +235,9 @@ export default function ClientDocumentRequestsPage() {
                 <TableCell className="text-left">
                   {document_request.type}
                 </TableCell>
+                <TableCell className="text-left">
+                  {document_request.remarks}
+                </TableCell>
                 <TableCell className="text-right">
                   {document_request.date_requested}
                 </TableCell>
@@ -242,7 +246,7 @@ export default function ClientDocumentRequestsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={7}>Total</TableCell>
+            <TableCell colSpan={8}>Total</TableCell>
             <TableCell className="text-right">
               {document_requests.data
                 ? document_requests.data.filter(
