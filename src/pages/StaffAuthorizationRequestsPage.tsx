@@ -158,7 +158,8 @@ export default function StaffAuthorizationRequestsPage() {
                             <TableCell colSpan={1}>Total</TableCell>
                             <TableCell className="text-right">
                               {authorization_request.documents.split(",")
-                                ? authorization_request.documents.length
+                                ? authorization_request.documents.split(",")
+                                    .length
                                 : 0}
                             </TableCell>
                           </TableRow>

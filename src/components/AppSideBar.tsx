@@ -128,6 +128,15 @@ export default function AppSidebar() {
               </div>
             </Button>
             <Button
+              onClick={() => navigate("/authorization_requests/list")}
+              className="w-full"
+            >
+              <div className="flex flex-row items-center w-full gap-1">
+                <BookIcon />
+                <span>View Authorization Requests (Client)</span>
+              </div>
+            </Button>
+            <Button
               onClick={() => navigate("/documents/list/")}
               className="w-full"
             >

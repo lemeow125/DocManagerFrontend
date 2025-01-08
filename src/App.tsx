@@ -36,6 +36,7 @@ import PlanningQuestionnairesPage from "./pages/PlanningQuestionnairesPage";
 import CreateAuthorizationRequestPage from "./pages/CreateAuthorizationRequestPage";
 import HeadAuthorizationRequestsPage from "./pages/HeadAuthorizationRequestsPage";
 import StaffAuthorizationRequestsPage from "./pages/StaffAuthorizationRequestsPage";
+import ClientAuthorizationRequestsPage from "./pages/ClientAuthorizationRequestsPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -153,6 +154,17 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <DocumentRequestsPage />
+      </>
+    ),
+  },
+  {
+    path: "/authorization_requests/list/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <ClientAuthorizationRequestsPage />
       </>
     ),
   },

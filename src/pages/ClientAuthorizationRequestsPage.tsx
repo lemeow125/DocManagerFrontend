@@ -1,10 +1,8 @@
 import {
-  AuthorizationRequestUpdateType,
-  AuthorizationRequestUpdateAPI,
   AuthorizationRequestsAPI,
   AuthorizationRequestType,
 } from "@/components/API";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
 import {
@@ -22,74 +20,20 @@ import { Label } from "@radix-ui/react-label";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { toast } from "react-toastify";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Link } from "react-router";
-import { Separator } from "@/components/ui/separator";
 
-export default function HeadAuthorizationRequestsPage() {
-  const [error, setError] = useState("");
-  const queryClient = useQueryClient();
-  const update_mutation = useMutation({
-    mutationFn: async ({
-      authorization_request,
-      id,
-    }: {
-      authorization_request: AuthorizationRequestUpdateType;
-      id: number;
-    }) => {
-      const data = await AuthorizationRequestUpdateAPI(
-        authorization_request,
-        id
-      );
-      if (data[0] != true) {
-        return Promise.reject(new Error(JSON.stringify(data[1])));
-      }
-      return data;
-    },
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({ queryKey: ["authorization_requests"] });
-      setError("");
-      toast(
-        `Request updated   successfuly,  ${
-          typeof data[1] == "object" ? "ID:" + data[1].id : ""
-        }`,
-        {
-          position: "top-right",
-          autoClose: 2000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        }
-      );
-    },
-    onError: (error) => {
-      setError(String(error));
-    },
-  });
+export default function ClientAuthorizationRequestsPage() {
   const [search_term, setSearchTerm] = useState("");
   const [view_pending_only, setViewPendingOnly] = useState(false);
   const authorization_requests = useQuery({
     queryKey: ["authorization_requests"],
     queryFn: AuthorizationRequestsAPI,
   });
-  const [selected_authorization_request, setSelectedAuthorizationRequest] =
-    useState<AuthorizationRequestUpdateType>({
-      status: "denied",
-      remarks: "",
-    });
   if (authorization_requests.isLoading || !authorization_requests.data) {
     return <LoadingPage />;
   }
@@ -122,7 +66,6 @@ export default function HeadAuthorizationRequestsPage() {
         />
         <Label htmlFor="name">Show Pending Only</Label>
       </div>
-      <Label className="text-red-600 w-max">{error}</Label>
       <Table className="w-full">
         <TableCaption>Document Requests</TableCaption>
         <TableHeader>
@@ -134,8 +77,7 @@ export default function HeadAuthorizationRequestsPage() {
             <TableHead>Status</TableHead>
             <TableHead>Documents Requested</TableHead>
             <TableHead>Remarks</TableHead>
-            <TableHead>Date Requested</TableHead>
-            <TableHead className="text-right">Action</TableHead>
+            <TableHead className="text-right">Date Requested</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -227,107 +169,15 @@ export default function HeadAuthorizationRequestsPage() {
                 <TableCell className="text-left">
                   {authorization_request.remarks}
                 </TableCell>
-                <TableCell className="text-left">
-                  {authorization_request.date_requested}
-                </TableCell>
                 <TableCell className="text-right">
-                  {authorization_request.status == "pending" ? (
-                    <div className="flex-col space-y-5">
-                      <Button
-                        onClick={() =>
-                          update_mutation.mutate({
-                            authorization_request: {
-                              status: "approved",
-                              remarks: "N/A",
-                            },
-                            id: authorization_request.id,
-                          })
-                        }
-                        className="w-full"
-                      >
-                        Approve
-                      </Button>
-                      <Dialog>
-                        <DialogTrigger asChild className="w-full">
-                          <Button
-                            onClick={() =>
-                              setSelectedAuthorizationRequest({
-                                status: "denied",
-                                remarks: "",
-                              })
-                            }
-                          >
-                            Deny
-                          </Button>
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px]">
-                          <DialogHeader>
-                            <DialogTitle>Deny Request</DialogTitle>
-                            <DialogDescription>
-                              Provide remarks as to why the request has been
-                              denied. Click deny when you're done.
-                            </DialogDescription>
-                          </DialogHeader>
-                          <div className="flex flex-col space-y-1.5">
-                            <Label htmlFor="name">Remarks</Label>
-                            <Input
-                              value={selected_authorization_request.remarks}
-                              onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                              ) => {
-                                setSelectedAuthorizationRequest({
-                                  ...selected_authorization_request,
-                                  remarks: e.target.value,
-                                });
-                              }}
-                              placeholder={"Provide a reason here"}
-                            />
-                          </div>
-                          <DialogFooter>
-                            <DialogClose asChild>
-                              <Button
-                                onClick={() =>
-                                  update_mutation.mutate({
-                                    authorization_request:
-                                      selected_authorization_request,
-                                    id: authorization_request.id,
-                                  })
-                                }
-                                type="submit"
-                              >
-                                Deny
-                              </Button>
-                            </DialogClose>
-                          </DialogFooter>
-                        </DialogContent>
-                      </Dialog>
-                      <Separator />
-                      <Link
-                        className="w-full"
-                        to="/export/CRS03/"
-                        state={{ authorization_request: authorization_request }}
-                      >
-                        <Button className="w-full"> Export to CRS-03</Button>
-                      </Link>
-                    </div>
-                  ) : (
-                    <div className="flex-col space-y-5">
-                      <Link
-                        className="w-full"
-                        to="/export/CRS03/"
-                        state={{ authorization_request: authorization_request }}
-                      >
-                        <Button className="w-full">Export to CSR-03</Button>
-                      </Link>
-                    </div>
-                  )}
+                  {authorization_request.date_requested}
                 </TableCell>
               </TableRow>
             ))}
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={8}>Total</TableCell>
+            <TableCell colSpan={7}>Total</TableCell>
             <TableCell className="text-right">
               {authorization_requests.data
                 ? authorization_requests.data
