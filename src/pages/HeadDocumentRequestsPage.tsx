@@ -294,7 +294,7 @@ export default function HeadDocumentRequestsPage() {
                             <DialogTitle>Deny Request</DialogTitle>
                             <DialogDescription>
                               Provide remarks as to why the request has been
-                              denied. Click save when you're done.
+                              denied. Click deny when you're done.
                             </DialogDescription>
                           </DialogHeader>
                           <div className="flex flex-col space-y-1.5">
