@@ -126,7 +126,7 @@ export default function StaffDocumentsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={8}>Total</TableCell>
+            <TableCell colSpan={9}>Total</TableCell>
             <TableCell className="text-right">
               {documents.data
                 ? documents.data.filter(
