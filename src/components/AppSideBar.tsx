@@ -137,15 +137,6 @@ export default function AppSidebar() {
               </div>
             </Button>
             <Button
-              onClick={() => navigate("/documents/list/")}
-              className="w-full"
-            >
-              <div className="flex flex-row items-center w-full gap-1">
-                <BookIcon />
-                <span>View Documents (Client)</span>
-              </div>
-            </Button>
-            <Button
               onClick={() => navigate("/requests/create")}
               className="w-full"
             >

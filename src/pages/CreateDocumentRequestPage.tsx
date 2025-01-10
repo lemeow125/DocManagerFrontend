@@ -162,9 +162,11 @@ export default function CreateDocumentRequestPage() {
                   <SelectValue placeholder="Select" />
                 </SelectTrigger>
                 <SelectContent position="popper">
-                  <SelectItem value="softcopy">Softcopy</SelectItem>
                   <SelectItem value="hardcopy">Hardcopy</SelectItem>
                 </SelectContent>
+                <p className="text-2xs italic">
+                  Hardcopy requests are only available as of now
+                </p>
               </Select>
               <h1 className="text-2xl font-bold mb-4">Documents</h1>
               <MultiSelect

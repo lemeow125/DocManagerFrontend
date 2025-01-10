@@ -17,7 +17,6 @@ import UploadDocumentPage from "./pages/UploadDocumentPage";
 import StaffOnlyPage from "./components/StaffOnlyPage";
 import StaffDocumentsPage from "./pages/StaffDocumentsPage";
 import DocumentRequestsPage from "./pages/ClientDocumentRequestsPage";
-import ClientDocumentsPage from "./pages/ClientDocumentsPage";
 import HeadOnlyPage from "./components/HeadOnlyPage";
 import HeadDocumentRequestsPage from "./pages/HeadDocumentRequestsPage";
 import RegisterPage from "./pages/RegisterPage";
@@ -106,17 +105,6 @@ const router = createHashRouter([
         <AppSidebar />
         <Revalidator />
         <CreateAuthorizationRequestPage />
-      </>
-    ),
-  },
-  {
-    path: "/documents/list/",
-    element: (
-      <>
-        <Header />
-        <AppSidebar />
-        <Revalidator />
-        <ClientDocumentsPage />
       </>
     ),
   },
