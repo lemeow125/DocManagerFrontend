@@ -159,6 +159,9 @@ export default function HeadDocumentsPage() {
             <TableHead>Actions</TableHead>
             <TableHead>Link</TableHead>
             <TableHead>Sent From</TableHead>
+            <TableHead>Document Month</TableHead>
+            <TableHead>Document Year</TableHead>
+            <TableHead>Subject</TableHead>
             <TableHead className="text-right">Date Uploaded</TableHead>
           </TableRow>
         </TableHeader>
@@ -167,6 +170,15 @@ export default function HeadDocumentsPage() {
             .filter(
               (document: DocumentType) =>
                 search_term.includes(String(document.id)) ||
+                document.subject
+                  .toLowerCase()
+                  .includes(search_term.toLowerCase()) ||
+                document.document_month
+                  .toLowerCase()
+                  .includes(search_term.toLowerCase()) ||
+                document.document_year
+                  .toLowerCase()
+                  .includes(search_term.toLowerCase()) ||
                 document.name
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
@@ -289,9 +301,16 @@ export default function HeadDocumentsPage() {
                     <p>Not available</p>
                   )}
                 </TableCell>
-                <TableCell className="text-right">
+                <TableCell className="text-left">
                   {document.sent_from}
                 </TableCell>
+                <TableCell className="text-left">
+                  {document.document_month}
+                </TableCell>
+                <TableCell className="text-left">
+                  {document.document_year}
+                </TableCell>
+                <TableCell className="text-left">{document.subject}</TableCell>
                 <TableCell className="text-right">
                   {document.date_uploaded}
                 </TableCell>
@@ -300,12 +319,21 @@ export default function HeadDocumentsPage() {
         </TableBody>
         <TableFooter>
           <TableRow>
-            <TableCell colSpan={6}>Total</TableCell>
+            <TableCell colSpan={9}>Total</TableCell>
             <TableCell className="text-right">
               {documents.data
                 ? documents.data.filter(
                     (document: DocumentType) =>
                       search_term.includes(String(document.id)) ||
+                      document.subject
+                        .toLowerCase()
+                        .includes(search_term.toLowerCase()) ||
+                      document.document_month
+                        .toLowerCase()
+                        .includes(search_term.toLowerCase()) ||
+                      document.document_year
+                        .toLowerCase()
+                        .includes(search_term.toLowerCase()) ||
                       document.name
                         .toLowerCase()
                         .includes(search_term.toLowerCase()) ||

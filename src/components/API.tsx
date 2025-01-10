@@ -258,6 +258,9 @@ export type DocumentType = {
   file?: string;
   ocr_metadata: string;
   date_uploaded: string;
+  document_month: string;
+  document_year: string;
+  subject: string;
 };
 
 export type DocumentCreateType = {
