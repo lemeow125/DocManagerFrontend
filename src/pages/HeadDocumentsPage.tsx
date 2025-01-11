@@ -221,7 +221,7 @@ export default function HeadDocumentsPage() {
                           Edit
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px] sm:max-h-[640px] overflow-y-scroll">
+                      <DialogContent className="sm:max-w-[425px] sm:max-h-[640px] overflow-y-scrollgi">
                         <DialogHeader>
                           <DialogTitle>Edit Document</DialogTitle>
                           <DialogDescription>
