@@ -45,6 +45,10 @@ export default function HeadDocumentsPage() {
       name: "",
       document_type: "HOA",
       number_pages: 1,
+      document_month: "",
+      document_year: "",
+      sent_from: "",
+      subject: "",
     }
   );
   const delete_mutation = useMutation({
@@ -170,25 +174,20 @@ export default function HeadDocumentsPage() {
             .filter(
               (document: DocumentType) =>
                 search_term.includes(String(document.id)) ||
-                document.subject
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
-                document.document_month
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
-                document.document_year
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
-                document.name
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document.subject ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
+                document.document_month ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
+                document.document_year ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
+                document.name ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document.document_type
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
                 search_term.includes(String(document.number_pages)) ||
-                document.ocr_metadata
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document.ocr_metadata ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document.date_uploaded
                   .toLowerCase()
                   .includes(search_term.toLowerCase())
@@ -212,13 +211,17 @@ export default function HeadDocumentsPage() {
                               name: document.name,
                               document_type: document.document_type,
                               number_pages: document.number_pages,
+                              sent_from: document.sent_from,
+                              document_month: document.document_month,
+                              document_year: document.document_year,
+                              subject: document.subject,
                             })
                           }
                         >
                           Edit
                         </Button>
                       </DialogTrigger>
-                      <DialogContent className="sm:max-w-[425px]">
+                      <DialogContent className="sm:max-w-[425px] sm:max-h-[640px] overflow-y-scroll">
                         <DialogHeader>
                           <DialogTitle>Edit Document</DialogTitle>
                           <DialogDescription>
@@ -273,7 +276,66 @@ export default function HeadDocumentsPage() {
                             placeholder={document.document_type}
                           />
                         </div>
-
+                        <div className="flex flex-col space-y-1.5">
+                          <Label htmlFor="name">Sent From</Label>
+                          <Input
+                            value={selected_document.sent_from}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setSelectedDocument({
+                                ...selected_document,
+                                sent_from: e.target.value,
+                              });
+                            }}
+                            placeholder={document.sent_from}
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                          <Label htmlFor="name">Document Subject</Label>
+                          <Input
+                            value={selected_document.subject}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setSelectedDocument({
+                                ...selected_document,
+                                subject: e.target.value,
+                              });
+                            }}
+                            placeholder={document.subject}
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                          <Label htmlFor="name">Document Year</Label>
+                          <Input
+                            value={selected_document.document_year}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setSelectedDocument({
+                                ...selected_document,
+                                document_year: e.target.value,
+                              });
+                            }}
+                            placeholder={document.document_year}
+                          />
+                        </div>
+                        <div className="flex flex-col space-y-1.5">
+                          <Label htmlFor="name">Document Month</Label>
+                          <Input
+                            value={selected_document.document_month}
+                            onChange={(
+                              e: React.ChangeEvent<HTMLInputElement>
+                            ) => {
+                              setSelectedDocument({
+                                ...selected_document,
+                                document_month: e.target.value,
+                              });
+                            }}
+                            placeholder={document.document_month}
+                          />
+                        </div>
                         <DialogFooter>
                           <DialogClose asChild>
                             <Button
@@ -325,25 +387,20 @@ export default function HeadDocumentsPage() {
                 ? documents.data.filter(
                     (document: DocumentType) =>
                       search_term.includes(String(document.id)) ||
-                      document.subject
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.document_month
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.document_year
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.name
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
+                      document.subject ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.document_month ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.document_year ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.name ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
                       document.document_type
                         .toLowerCase()
                         .includes(search_term.toLowerCase()) ||
                       search_term.includes(String(document.number_pages)) ||
-                      document.ocr_metadata
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
+                      document.ocr_metadata ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
                       document.date_uploaded
                         .toLowerCase()
                         .includes(search_term.toLowerCase())

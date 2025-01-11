@@ -268,12 +268,20 @@ export type DocumentCreateType = {
   file: File | null;
   document_type: string;
   number_pages: number;
+  sent_from: string;
+  document_month: string;
+  document_year: string;
+  subject: string;
 };
 
 export type DocumentUpdateType = {
   name: string;
   document_type: string;
   number_pages: number;
+  sent_from: string;
+  document_month: string;
+  document_year: string;
+  subject: string;
 };
 
 export async function DocumentsAPI() {

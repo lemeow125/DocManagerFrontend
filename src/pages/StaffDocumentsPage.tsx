@@ -66,15 +66,12 @@ export default function StaffDocumentsPage() {
             .filter(
               (document: DocumentType) =>
                 search_term.includes(String(document.id)) ||
-                document.subject
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
-                document.document_month
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
-                document.document_year
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document.subject ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
+                document.document_month ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
+                document.document_year ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document.name
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
@@ -82,9 +79,8 @@ export default function StaffDocumentsPage() {
                   .toLowerCase()
                   .includes(search_term.toLowerCase()) ||
                 search_term.includes(String(document.number_pages)) ||
-                document.ocr_metadata
-                  .toLowerCase()
-                  .includes(search_term.toLowerCase()) ||
+                document.ocr_metadata ||
+                "".toLowerCase().includes(search_term.toLowerCase()) ||
                 document.date_uploaded
                   .toLowerCase()
                   .includes(search_term.toLowerCase())
@@ -132,25 +128,20 @@ export default function StaffDocumentsPage() {
                 ? documents.data.filter(
                     (document: DocumentType) =>
                       search_term.includes(String(document.id)) ||
-                      document.subject
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.document_month
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.document_year
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
-                      document.name
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
+                      document.subject ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.document_month ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.document_year ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
+                      document.name ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
                       document.document_type
                         .toLowerCase()
                         .includes(search_term.toLowerCase()) ||
                       search_term.includes(String(document.number_pages)) ||
-                      document.ocr_metadata
-                        .toLowerCase()
-                        .includes(search_term.toLowerCase()) ||
+                      document.ocr_metadata ||
+                      "".toLowerCase().includes(search_term.toLowerCase()) ||
                       document.date_uploaded
                         .toLowerCase()
                         .includes(search_term.toLowerCase())

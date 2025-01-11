@@ -21,8 +21,12 @@ export default function UploadDocumentPage() {
   const [document, setDocument] = useState<DocumentCreateType>({
     name: "",
     file: null,
-    document_type: "HOA",
+    document_type: "other",
     number_pages: 1,
+    sent_from: "N/A",
+    document_month: "no_month",
+    document_year: "no_year",
+    subject: "",
   });
   const create_mutation = useMutation({
     mutationFn: async () => {
@@ -31,6 +35,10 @@ export default function UploadDocumentPage() {
       formData.append("file", document.file!);
       formData.append("document_type", document.document_type);
       formData.append("number_pages", String(document.number_pages));
+      formData.append("sent_from", document.sent_from);
+      formData.append("document_month", document.document_month);
+      formData.append("document_year", document.document_year);
+      formData.append("subject", document.subject);
       const data = await DocumentCreateAPI(formData);
       if (data[0] != true) {
         return Promise.reject(new Error(JSON.stringify(data[1])));
@@ -74,6 +82,18 @@ export default function UploadDocumentPage() {
         <CardContent>
           <form>
             <div className="grid w-full items-center gap-4">
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Document Subject</Label>
+                <Input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDocument({
+                      ...document,
+                      subject: e.target.value,
+                    });
+                  }}
+                  placeholder="Subject of document"
+                />
+              </div>
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="name">Document Name</Label>
                 <Input
@@ -129,6 +149,42 @@ export default function UploadDocumentPage() {
                   />
                 </div>
               </div>
+              <div className="flex flex-col space-y-1.5">
+                <Label htmlFor="name">Sent From</Label>
+                <Input
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setDocument({
+                      ...document,
+                      sent_from: e.target.value,
+                    });
+                  }}
+                  placeholder="Person or organization who sent the document"
+                />
+              </div>
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="name">Document Year</Label>
+              <Input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setDocument({
+                    ...document,
+                    document_year: e.target.value,
+                  });
+                }}
+                placeholder="Year document was created e.g. 2016/2017"
+              />
+            </div>
+            <div className="flex flex-col space-y-1.5">
+              <Label htmlFor="name">Document Month</Label>
+              <Input
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                  setDocument({
+                    ...document,
+                    document_month: e.target.value,
+                  });
+                }}
+                placeholder="Month document was created e.g. January/December"
+              />
             </div>
           </form>
         </CardContent>
