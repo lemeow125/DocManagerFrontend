@@ -36,6 +36,8 @@ import CreateAuthorizationRequestPage from "./pages/CreateAuthorizationRequestPa
 import HeadAuthorizationRequestsPage from "./pages/HeadAuthorizationRequestsPage";
 import StaffAuthorizationRequestsPage from "./pages/StaffAuthorizationRequestsPage";
 import ClientAuthorizationRequestsPage from "./pages/ClientAuthorizationRequestsPage";
+import AdminOnlyPage from "./components/AdminOnlyPage";
+import AdminUsersPage from "./pages/AdminUsersPage";
 const queryClient = new QueryClient();
 
 const router = createHashRouter([
@@ -192,6 +194,19 @@ const router = createHashRouter([
         <HeadOnlyPage>
           <HeadDocumentRequestsPage />
         </HeadOnlyPage>
+      </>
+    ),
+  },
+  {
+    path: "/users/list/",
+    element: (
+      <>
+        <Header />
+        <AppSidebar />
+        <Revalidator />
+        <AdminOnlyPage>
+          <AdminUsersPage />
+        </AdminOnlyPage>
       </>
     ),
   },

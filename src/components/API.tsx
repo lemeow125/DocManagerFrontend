@@ -67,7 +67,9 @@ export function ParseError(error: { response: { data: string } }) {
 
 // User
 export const staff_roles = ["head", "admin", "staff"];
-export const planning_roles = ["planning"]; // Don't include staff or head
+export const planning_roles = ["admin", "planning"]; // Don't include staff or head
+export const head_roles = ["admin", "head"];
+export const admin_roles = ["admin"];
 
 export type UserType = {
   id: number;
@@ -180,6 +182,35 @@ export async function UserAPI() {
     .catch((error) => {
       console.log(error.message);
       return error;
+    });
+}
+
+export async function UsersAPI() {
+  const config = await GetConfig();
+  return instance
+    .get("api/v1/accounts/users", config)
+    .then((response) => {
+      return response.data as UserType[];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return error;
+    });
+}
+
+export async function UserDeleteAPI(id: number) {
+  const config = await GetConfig();
+  return instance
+    .delete(`api/v1/accounts/users/delete/${id}/`, config)
+    .then((response) => {
+      return [true, response.data];
+    })
+    .catch((error) => {
+      console.log("Error deleting user");
+      return [
+        false,
+        error.response.data["error"] || error.response.data["detail"],
+      ];
     });
 }
 

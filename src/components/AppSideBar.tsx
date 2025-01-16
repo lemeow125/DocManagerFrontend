@@ -16,7 +16,9 @@ import {
   setAccessToken,
   setRefreshToken,
   staff_roles,
+  head_roles,
   UserAPI,
+  admin_roles,
 } from "./API";
 import BookIcon from "./icons/bookicon";
 import DashboardIcon from "./icons/dashboardicon";
@@ -172,7 +174,20 @@ export default function AppSidebar() {
             <p className="text-sm text-center sm:text-left font-bold">
               Staff Actions
             </p>
-            {user.data.role == "head" ? (
+            {admin_roles.includes(user.data.role) ? (
+              <Button
+                onClick={() => navigate("/users/list/")}
+                className="w-full"
+              >
+                <div className="flex flex-row items-center w-full gap-1">
+                  <BookIcon />
+                  <span>Users (Admin)</span>
+                </div>
+              </Button>
+            ) : (
+              <></>
+            )}
+            {head_roles.includes(user.data.role) ? (
               <>
                 <Button
                   onClick={() => navigate("/documents/list/head/")}
