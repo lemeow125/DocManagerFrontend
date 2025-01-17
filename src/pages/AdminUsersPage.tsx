@@ -1,4 +1,10 @@
-import { UserDeleteAPI, UsersAPI, UserType } from "@/components/API";
+import {
+  AdminUserUpdateType,
+  UserDeleteAPI,
+  UsersAPI,
+  UserType,
+  AdminUserUpdateAPI,
+} from "@/components/API";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import LoadingPage from "./LoadingPage";
 import ErrorPage from "./ErrorPage";
@@ -12,17 +18,37 @@ import {
   TableCaption,
   TableFooter,
 } from "@/components/ui/table";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 export default function AdminUsersPage() {
   const [search_term, setSearchTerm] = useState("");
   const queryClient = useQueryClient();
   const users = useQuery({
     queryKey: ["users"],
     queryFn: UsersAPI,
+  });
+  const [selected_user, setSelectedUser] = useState<AdminUserUpdateType>({
+    role: "",
   });
   const delete_mutation = useMutation({
     mutationFn: async (id: number) => {
@@ -56,6 +82,44 @@ export default function AdminUsersPage() {
         progress: undefined,
         theme: "light",
       });
+    },
+  });
+  const update_mutation = useMutation({
+    mutationFn: async (id: number) => {
+      const data = await AdminUserUpdateAPI(id, selected_user);
+      if (data[0] != true) {
+        return Promise.reject(new Error(JSON.stringify(data[1])));
+      }
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["users"] });
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+      toast(`User updated successfuly`, {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    },
+    onError: (error) => {
+      toast(
+        `An error occured while trying to updating the user ${String(error)}`,
+        {
+          position: "top-right",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
     },
   });
   if (users.isLoading || !users.data) {
@@ -128,6 +192,63 @@ export default function AdminUsersPage() {
                 <TableCell className="text-left">{user.full_name}</TableCell>
                 <TableCell className="text-left">
                   <div className="flex-col">
+                    <Dialog>
+                      <DialogTrigger asChild>
+                        <Button
+                          onClick={() =>
+                            setSelectedUser({
+                              role: user.role,
+                            })
+                          }
+                        >
+                          Edit
+                        </Button>
+                      </DialogTrigger>
+                      <DialogContent className="sm:max-w-[425px] sm:max-h-[640px] overflow-y-scroll">
+                        <DialogHeader>
+                          <DialogTitle>Edit User</DialogTitle>
+                          <DialogDescription>
+                            Make changes to the user here. Click save when
+                            you're done.
+                          </DialogDescription>
+                        </DialogHeader>
+                        <div className="flex flex-col space-y-1.5">
+                          <Label htmlFor="name">Role</Label>
+                          <Select
+                            defaultValue={selected_user.role}
+                            value={selected_user.role}
+                            onValueChange={(value) =>
+                              setSelectedUser({
+                                ...selected_user,
+                                role: value,
+                              })
+                            }
+                          >
+                            <SelectTrigger>
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent position="popper">
+                              <SelectItem value="client">Client</SelectItem>
+                              <SelectItem value="planning">Planning</SelectItem>
+                              <SelectItem value="staff">Staff</SelectItem>
+                              <SelectItem value="head">Head</SelectItem>
+                              <SelectItem value="admin">Admin</SelectItem>
+                            </SelectContent>
+                          </Select>
+                        </div>
+                        <DialogFooter>
+                          <DialogClose asChild>
+                            <Button
+                              onClick={() => update_mutation.mutate(user.id)}
+                              type="submit"
+                            >
+                              Save changes
+                            </Button>
+                          </DialogClose>
+                        </DialogFooter>
+                      </DialogContent>
+                    </Dialog>
+
                     <Button onClick={() => delete_mutation.mutate(user.id)}>
                       Delete
                     </Button>

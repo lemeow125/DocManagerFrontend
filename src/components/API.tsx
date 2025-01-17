@@ -101,6 +101,10 @@ export type UpdateType = {
   last_name: string;
 };
 
+export type AdminUserUpdateType = {
+  role: string;
+};
+
 export type LoginType = {
   email: string;
   password: string;
@@ -220,6 +224,22 @@ export async function UserUpdatePasswordAPI(password: PasswordUpdateType) {
     .post("/api/v1/accounts/users/set_password/", password, config)
     .then((response) => {
       return [true, response.data];
+    })
+    .catch((error) => {
+      console.log(error.message);
+      return [false, error];
+    });
+}
+
+export async function AdminUserUpdateAPI(
+  id: number,
+  user: AdminUserUpdateType
+) {
+  const config = await GetConfig();
+  return instance
+    .patch(`api/v1/accounts/users/update/${id}/`, user, config)
+    .then((response) => {
+      return [true, response.data as UserType];
     })
     .catch((error) => {
       console.log(error.message);
